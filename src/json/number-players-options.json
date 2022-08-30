@@ -1,0 +1,82 @@
+[
+    {
+        "value": "1P",
+        "label": "1 player",
+        "common": true
+
+    },
+    {
+        "value": "2P alt",
+        "label": "2 players (alternating)",
+        "common": true
+
+    },
+    {
+        "value": "2P sim",
+        "label": "2 players (simultaneous)",
+        "common": true
+
+    },
+    {
+        "value": "3P alt",
+        "label": "3 players (alternating)",
+        "common": true
+    },
+    {
+        "value": "3P sim",
+        "label": "3 players (simultaneous)",
+        "common": true
+    },
+    {
+        "value": "4P alt",
+        "label": "4 players (alternating)",
+        "common": true
+    },
+    {
+        "value": "4P sim",
+        "label": "4 players (simultaneous)",
+        "common": true
+    },
+    {
+        "value": "4P alt/2P sim",
+        "label": "4 players (alternating) / 2 players (simultaneous)",
+        "common": false
+    },
+    {
+        "value": "5P alt",
+        "label": "5 players (alternating)",
+        "common": false
+
+    },
+    {
+        "value": "6P alt",
+        "label": "6 players (alternating)",
+        "common": false
+
+    },
+    {
+        "value": "6P sim",
+        "label": "6 players (simultaneous)",
+        "common": false
+    },
+    {
+        "value": "6P alt/2P sim",
+        "label": "6 players (alternating) / 2 players (simultaneous)",
+        "common": false
+    },
+    {
+        "value": "8P alt/2P sim",
+        "label": "8 players (alternating) / 2 players (simultaneous)",
+        "common": false
+    },
+    {
+        "value": "8P sim",
+        "label": "8 players (simultaneous)",
+        "common": false
+    },
+    {
+        "value": "9P alt",
+        "label": "9 players alternating",
+        "common": false
+    }
+]

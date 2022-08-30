@@ -1,0 +1,42 @@
+[
+    {
+        "value":  "joy4way",
+        "label": "4 way joystick"
+    },
+    {
+        "value": "joy8way",
+        "label": "8 way joystick"
+    },
+   {
+        "value": "button",
+        "label": "buttons only"
+    }, 
+    {
+        "value": "trackball",
+        "label": "trackball"
+    },
+    {
+        "value": "doublejoy8way",
+        "label": "dual 8 way joysticks"
+    },
+    {
+        "value": "dial",
+        "label": "dial"
+    },
+    {
+        "value": "paddle",
+        "label": "paddle"
+    },
+    {
+        "value": "stick",
+        "label": "flight stick"
+    },
+    {
+        "value": "lightgun",
+        "label": "light gun"
+    },
+    {
+        "value": "doublejoy4way",
+        "label": "dual 4 way joysticks"
+    }
+]
