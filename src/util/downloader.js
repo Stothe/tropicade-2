@@ -4,12 +4,18 @@
 import Button from "@wordpress/components";
 import { map } from "lodash";
 
-/** Function to download Attract Mode games lists
- * creates a blob from completed game objects
- * @arguments {string} content, file name, content type
- * prompts user to save file
- */
-export default function downloadToFile(content, filename, contentType) {
+export default function downloadToFile(
+	games,
+	filename = "test.txt",
+	contentType = "text"
+) {
+	console.log(games);
+	//grab fields we need and format it as a text file.  Hardcoded to search and replace for now
+	let content = "";
+	const createBatRoot = map(games, (e) => {
+		content = content + "%sourcedir%" + e.rom + ".zip %targetdir% \n";
+	});
+
 	const a = document.createElement("a");
 	const file = new Blob([content], { type: contentType });
 

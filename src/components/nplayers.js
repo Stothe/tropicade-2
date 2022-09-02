@@ -40,6 +40,7 @@ export default function NPlayersFormPart({ selectedValues, onChangeHandler, ...p
                                 label={control.label}
                                 value={control.value}
                                 onChange={onChangeHandler}
+                                defaultChecked={control.default}
                                 />
                        )
                     } else if (weirdChecked) {

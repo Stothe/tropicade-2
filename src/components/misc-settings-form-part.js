@@ -11,8 +11,7 @@ export default function MiscSettingsFormPart({
 	selectedValues,
 	onChangeHandler,
 	onButtonUpdateHandler,
-	screenOrientation,
-	onScreenOrientationHandler,
+	onOrientationHandler,
 	...props
 }) {
 	return (
@@ -23,14 +22,14 @@ export default function MiscSettingsFormPart({
                     <legend> Screen Orientation </legend>
 					<CheckboxControl
 						label={"Horizontal"}
-						value={"horizontal"}
-						onChange={onScreenOrientationHandler}
+						value={"0"}
+						onChange={onOrientationHandler}
 						defaultChecked
 					/>
 					<CheckboxControl
 						label={"Vertical"}
-						value={"vertical"}
-						onChange={onScreenOrientationHandler}
+						value={"90"}
+						onChange={onOrientationHandler}
 						defaultChecked
 					/>
 				</fieldset>

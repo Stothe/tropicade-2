@@ -23,6 +23,7 @@ export default function  ControlsFormPart({ selectedValues, onChangeHandler, ...
                                 label={e.label}
                                 value={e.value}
                                 onChange={onChangeHandler}
+								defaultChecked={e.default}
                             />
 						);
 					})}

@@ -8,19 +8,22 @@
     {
         "value": "2P alt",
         "label": "2 players (alternating)",
-        "common": true
+        "common": true,
+        "default": true
 
     },
     {
         "value": "2P sim",
         "label": "2 players (simultaneous)",
-        "common": true
+        "common": true,
+        "default": true
 
     },
     {
         "value": "3P alt",
         "label": "3 players (alternating)",
-        "common": true
+        "common": true,
+        "default": true
     },
     {
         "value": "3P sim",
@@ -30,7 +33,8 @@
     {
         "value": "4P alt",
         "label": "4 players (alternating)",
-        "common": true
+        "common": true,
+        "default": true
     },
     {
         "value": "4P sim",
