@@ -31,6 +31,8 @@ function Form() {
 		"mature",
 		"casino",
 		"mahjong",
+		"pc10",
+		"vs"
 	]);
 
 	const handleOrientationSelect = (e) => {

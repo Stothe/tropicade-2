@@ -25,19 +25,15 @@ export default function GameListRender(props) {
 			<table>
 				<tr>
 					<th>Game</th>
-					<th>Players</th>
-					<th>Rom</th>
-					<th>Control</th>
-					<th>Buttons</th>
+					<th>Year</th>
+					<th>Manufacturer</th>
 				</tr>
 				{map(games, (e) => {
 					return (
 						<tr>
 							<td>{e.title}</td>
-							<td>{e.players}</td>
-							<td>{e.rom}</td>
-							<td>{e.control}</td>
-							<td>{e.buttons}</td>
+							<td>{e.year}</td>
+							<td>{e.manufacturer}</td>
 						</tr>
 					);
 				})}

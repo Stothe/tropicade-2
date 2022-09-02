@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { map, filter, find, orderBy } from "lodash";
-import { useState, useEffect, useMemo } from "@wordpress/element";
+import { map, filter, find, orderBy, includes } from "lodash";
 
 /**
  * Local dependencies
@@ -48,6 +47,8 @@ export default function gameListEngine(
 			const romName = e._name;
 			const rotate = e.display._rotate;
 			const working = e.driver._status;
+			const year = e.year;
+			const manufacturer = e.manufacturer;
 
 			//filter roms
 
@@ -102,6 +103,11 @@ export default function gameListEngine(
 				return;
 			}
 
+			if( includes(gameDesc, "Cassette") ) {
+				//Deco cassette and other crap
+				return;
+			}
+
 			//filter on nPlayers
 			// get nplayer value for rom
 			let players = NPlayers.find((p) => p.rom == romName);
@@ -124,6 +130,8 @@ export default function gameListEngine(
 				players: players,
 				orientation: rotate,
 				status: working,
+				manufacutrer: manufacturer,
+				year: year
 			});
 		} catch (error) {
 			//end generic error handling
@@ -135,3 +143,6 @@ export default function gameListEngine(
 	const orderedArray = orderBy(tempArray, "title", "asc");
 	handleGamesFiltered(orderedArray);
 }
+
+//scratchpad
+
