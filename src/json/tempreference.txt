@@ -1,0 +1,20 @@
+game
+.description
+.year
+.manufacturer
+.display._rotate g
+.input.control._type c
+.input._buttons
+.driver._status
+._name
+._cloneof
+
+Todo
+disable console.logs 
+
+
+
+Strip parens? (what about clonses??)
+
+multi exports (woo hoo!) [done!]
+
