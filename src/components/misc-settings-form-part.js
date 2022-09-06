@@ -84,6 +84,7 @@ export default function MiscSettingsFormPart({
 					label={"Hide PlayChoice10"}
 					value={"pc10"}
 					onChange={onChangeHandler}
+					defaultChecked
 				/>
 			</div>
 			<div>
@@ -91,6 +92,7 @@ export default function MiscSettingsFormPart({
 					label={"Hide Nintendo Vs"}
 					value={"vs"}
 					onChange={onChangeHandler}
+					defaultChecked
 				/>
 			</div>
 		</fieldset>
