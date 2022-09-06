@@ -145,7 +145,7 @@ export default function gameListEngine(
 				players: players,
 				rotation: rotate,
 				status: working,
-				manufacutrer: manufacturer,
+				manufacturer: manufacturer,
 				year: year,
 				clone: clone,
 			});
