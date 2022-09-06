@@ -57,7 +57,7 @@ export default function gameListEngine(
 		try {
 			const controller = sanatizeControls(e);
 			let clone = e._cloneof ? true : false;
-			const buttons = e.input._buttons ? e.input._buttons : 0;
+			const buttons = e.input._buttons ? parseInt(e.input._buttons) : 0;
 			let gameDesc = e.description;
 			const romName = e._name;
 			let rotate = e.display._rotate;
@@ -78,7 +78,7 @@ export default function gameListEngine(
 			}
 
 			//filter on controls and buttons
-			if (controlsClicked.indexOf(controller) < 0 || numButtons <= buttons) {
+			if (controlsClicked.indexOf(controller) < 0 || numButtons < buttons) {
 				return;
 			}
 
