@@ -38,14 +38,31 @@ export default function gameListEngine(
 		}
 	};
 
+	const handleTwoPlayer = (e) => {
+		if (
+			nplayersClicked.indexOf("2P sim") >= 0 &&
+			nplayersClicked.indexOf("4P sim") < 0
+		) {
+			//push this clone (will leaving it alone push it anyway?)
+
+			//push parent
+			const parentRom = find(gamesTargets, { _name: e._cloneof });
+
+			tempArray.push({
+				rom: parentRom._name,
+				gamelistIgonre: true,
+			});
+		}
+	};
+
 	map(gamesTargets, (e) => {
-		try {			
+		try {
 			const controller = sanatizeControls(e);
 			let clone = e._cloneof ? true : false;
 			const buttons = e.input._buttons ? e.input._buttons : 0;
 			let gameDesc = e.description;
 			const romName = e._name;
-			const rotate = e.display._rotate;
+			let rotate = e.display._rotate;
 			const working = e.driver._status;
 			const year = e.year;
 			const manufacturer = e.manufacturer;
@@ -54,7 +71,10 @@ export default function gameListEngine(
 
 			//filter on orientation
 			if (screenOrientation.length < 2) {
-				if(screenOrientation.indexOf(rotate) <0 ) {
+				if (rotate === "270") {
+					rotate = "90";
+				}
+				if (screenOrientation.indexOf(rotate) < 0) {
 					return;
 				}
 			}
@@ -68,10 +88,10 @@ export default function gameListEngine(
 			const goodClone = find(specialClones, { rom: romName });
 			if (goodClone) {
 				if (goodClone.twoPlayer === true) {
-					//figure out how to handle these, another function I guess
-					return;
+					console.log("neenerneener");
+					handleTwoPlayer(e);
 				} else {
-					// console.log("found good clone, adding to rotation", gameDesc);
+					//just chill
 				}
 			} else if (hideCats.indexOf("clones") > -1 && clone) {
 				return;
@@ -103,7 +123,7 @@ export default function gameListEngine(
 				return;
 			}
 
-			if( includes(gameDesc, "Cassette") ) {
+			if (includes(gameDesc, "Cassette")) {
 				//Deco cassette and other crap
 				return;
 			}
@@ -114,7 +134,7 @@ export default function gameListEngine(
 			players = players.players;
 			// filter nplayer value against selected nplayers
 			try {
-				if (nplayersClicked.indexOf(players) === -1) {
+				if (nplayersClicked.indexOf(players) < 0) {
 					return;
 				}
 			} catch {
@@ -128,21 +148,21 @@ export default function gameListEngine(
 				buttons: buttons,
 				title: gameDesc,
 				players: players,
-				orientation: rotate,
+				rotation: rotate,
 				status: working,
 				manufacutrer: manufacturer,
-				year: year
+				year: year,
+				clone: clone,
 			});
 		} catch (error) {
 			//end generic error handling
-			console.log(error.message);
 		}
 	});
 
 	//do something with tempArray
 	const orderedArray = orderBy(tempArray, "title", "asc");
+
 	handleGamesFiltered(orderedArray);
 }
 
 //scratchpad
-

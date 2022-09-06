@@ -2,7 +2,7 @@
  * External deps
  */
 import { map } from "lodash";
-import { Button } from "@wordpress/components";
+import { Button, Dropdown } from "@wordpress/components";
 
 /**
  * Local deps
@@ -16,10 +16,38 @@ export default function GameListRender(props) {
 			<div className="game-list-action-span">
 				<div>{games.length} games</div>
 				<div>
-					<Button onClick={() => downloadToFile(games)} variant="primary">
-						{" "}
-						Download!{" "}
-					</Button>
+					<Dropdown
+						className="my-container-class-name"
+						contentClassName="my-popover-content-classname"
+						position="bottom right"
+						renderToggle={({ isOpen, onToggle }) => (
+							<Button
+								variant="primary"
+								onClick={onToggle}
+								aria-expanded={isOpen}
+							>
+								Export...
+							</Button>
+						)}
+						renderContent={() => (
+							<>
+								<Button
+									onClick={() => downloadToFile(games, "copyStub")}
+									variant="tertiary"
+								>
+									{" "}
+									Copy files stub{" "}
+								</Button>
+								<Button
+									onClick={() => downloadToFile(games, "attract")}
+									variant="tertiary"
+								>
+									{" "}
+									Attract Mode rom list{" "}
+								</Button>{" "}
+							</>
+						)}
+					/>
 				</div>
 			</div>
 			<table>
