@@ -43,8 +43,6 @@ export default function gameListEngine(
 			nplayersClicked.indexOf("2P sim") >= 0 &&
 			nplayersClicked.indexOf("4P sim") < 0
 		) {
-			//push this clone (will leaving it alone push it anyway?)
-
 			//push parent
 			const parentRom = find(gamesTargets, { _name: e._cloneof });
 
@@ -88,10 +86,7 @@ export default function gameListEngine(
 			const goodClone = find(specialClones, { rom: romName });
 			if (goodClone) {
 				if (goodClone.twoPlayer === true) {
-					console.log("neenerneener");
 					handleTwoPlayer(e);
-				} else {
-					//just chill
 				}
 			} else if (hideCats.indexOf("clones") > -1 && clone) {
 				return;
