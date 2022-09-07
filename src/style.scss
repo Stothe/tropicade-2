@@ -9,6 +9,7 @@
 	background-color: #21759b;
 	color: #fff;
 	padding: 2px;
+	border-radius: 5px;
 }
 
 .controls-fieldset {
@@ -16,16 +17,32 @@
 		columns: 2;
 	}
 	.components-checkbox-control__label {
-		font-size:1.3em;
+		font-size: 1.3rem;
 	}
 }
 
 .num-players-fieldset {
 	.players-checkbox-div {
 		columns: 2;
+		margin-left: 1.5rem;
 	}
 }
 
-.other-options-fieldset {
-	columns: 3;
+.flex-wrapper {
+	display: flex;
+	flex: auto;
+	.filter-settings {
+		columns: 2;
+		margin-left: 1rem;
+	}
+}
+
+.screen-orientation div {
+	margin-top: -0.5rem;
+	margin-bottom: 0px;
+}
+
+.buttons-select {
+	margin-top: 0.5rem;
+	margin-bottom: 0px;
 }

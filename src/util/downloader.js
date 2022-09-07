@@ -25,6 +25,7 @@ export default function downloadToFile(
 	let amContent =
 		"#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n";
 	let content = "";
+	const catArray =[];
 	const createBatRoot = map(games, (e) => {		
 		const name = e.rom;
 		const title = e.title;
@@ -44,9 +45,9 @@ export default function downloadToFile(
 		const extra = "";
 		const buttons = e.buttons;
 
+		catArray.push(category.split(',')[0])
 		if (mode === "attract") {
 			if(e.gamelistIgonre) {
-				console.log("ignoring", e)
 				return
 			}
 			amContent =
@@ -85,6 +86,8 @@ export default function downloadToFile(
 				";" +
 				buttons +
 				"\n";
+
+				console.log(new Set(catArray));
 		} else if(mode==="copyStub") {
 			content = content + "copy %path_to_Source_dir%" + name + ".zip %path_to_Target_dir% \n";
 		}
