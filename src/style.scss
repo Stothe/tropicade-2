@@ -47,6 +47,20 @@
 	margin-bottom: 0px;
 }
 
-.category-fieldset{
+.category-fieldset {
 	columns: 3;
+}
+
+.gamelist-table {
+	text-align: center;
+
+	.list-row {
+		.gl-trash,
+		.gl-year {
+			vertical-align: top;
+		}
+		.list-trash-btn{
+			filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+		}
+	}
 }

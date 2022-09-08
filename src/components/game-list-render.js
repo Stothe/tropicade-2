@@ -2,17 +2,24 @@
  * External deps
  */
 import { map } from "lodash";
-import { Button, Dropdown } from "@wordpress/components";
+import { Button, Dropdown, ToggleControl } from "@wordpress/components";
+
 
 /**
  * Local deps
  */
 import downloadToFile from "../util/downloader.js";
+import { CheckboxControl, CustomButton } from "./checkbox-control.js";
+import Trash from "../img/trash.svg"
 
-export default function GameListRender(props) {
-	const { games } = props;
+
+
+
+export default function GameListRender({ games, onChangeHandler}) {
+
 	return (
 		<>
+		<trash />
 			<div className="game-list-action-span">
 				<div>{games.length} games</div>
 				<div>
@@ -50,21 +57,36 @@ export default function GameListRender(props) {
 					/>
 				</div>
 			</div>
-			<table>
-				<tr>
+			<table className="gamelist-table">
+				<tr className="gl-header">
+					<th>Delete</th>		
 					<th>Game</th>
 					<th>Year</th>
 					<th>Manufacturer</th>
 				</tr>
+				
 				{map(games, (e) => {
-					return (
-						<tr>
-							<td>{e.title}</td>
-							<td>{e.year}</td>
-							<td>{e.manufacturer}</td>
+					const rom = e.rom
+					return (						
+						<tr className="list-row">
+							<td className="gl-trash">
+							<CustomButton
+								type="image"
+								alt="delete button"
+								className="list-trash-btn"
+								src={Trash}
+								value={rom}							
+								onClick={ onChangeHandler }
+							/>
+							
+							</td>
+							<td className="gl-title">{e.title}</td>
+							<td className="gl-year">{e.year}</td>
+							<td className="gl-manu">{e.manufacturer}</td>
 						</tr>
 					);
 				})}
+				
 			</table>
 		</>
 	);
