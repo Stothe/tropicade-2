@@ -7,3 +7,11 @@ export default function CheckboxControl({ label, ...props }) {
       </div>
     );
   };
+
+  export  function CustomButton({...props }) {
+    return (
+      <div>
+        <input {...props} />
+      </div>
+    );
+  };

@@ -82,6 +82,14 @@ function Form() {
 		setGamesFiltered(e);
 	}
 
+	const handleGameDelete = (e) =>
+	{
+		e.preventDefault();
+		const rom = e.target.value;
+		console.log(rom);
+		setGamesFiltered(filter(gamesFiltered, (g) => g.rom !== rom))}
+		
+
 	return (
 		<div>
 			<form>				
@@ -127,7 +135,10 @@ function Form() {
 					</Button>
 				</div>
 				{gamesFiltered.length > 0 ? (
-					<GameListRender games={gamesFiltered} />
+					<GameListRender 
+					games={gamesFiltered}
+					onChangeHandler={handleGameDelete} 						
+					/>
 				) : null}
 			</form>
 		</div>

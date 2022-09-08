@@ -53,4 +53,15 @@
        columns: 3;
 }
 
+.gamelist-table {
+  text-align: center;
+}
+.gamelist-table .list-row .gl-trash,
+.gamelist-table .list-row .gl-year {
+  vertical-align: top;
+}
+.gamelist-table .list-row .list-trash-btn {
+  filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+}
+
 /*# sourceMappingURL=style-index.css.map*/

@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "title": "Tropicade 2",
   "category": "common",
-  "icon": "smiley",
+  "icon": "palmtree",
   "description": "Manage MAME Romlists with ease.",
   "supports": {
     "html": false

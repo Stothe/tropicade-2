@@ -34,7 +34,7 @@ export default function save() {
 		
 	return (
 		<div {...useBlockProps.save()} >
-		Hellllloooooo Fuckers!
+		Hello from the frontend
 		</div>
 	)
 }
