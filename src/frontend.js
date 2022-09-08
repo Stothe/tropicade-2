@@ -71,7 +71,6 @@ function Form() {
 	};
 
 	const handleCategoriesSelect = (e) => {
-		console.log(categoriesClicked);
 		if (e.target.checked) {
 			setCategoriesClicked([...categoriesClicked, e.target.value]);
 		} else {
@@ -98,6 +97,7 @@ function Form() {
 				<CategoryFormPart 
 					selectedValues={categoriesClicked}
 					onChangeHandler={(event) => handleCategoriesSelect(event)}
+					hideCats={hideCats}
 				/>
 				</div>
 				<ControlsFormPart
@@ -118,7 +118,8 @@ function Form() {
 							numButtons,
 							hideCats,
 							screenOrientation,
-							handleGamesFiltered
+							handleGamesFiltered,
+							categoriesClicked
 						);
 					}}>
 						{" "}
