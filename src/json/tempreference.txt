@@ -16,4 +16,6 @@ Strip parens? (what about clonses??)
 
 category filters (oh boy!)
 
+Detail card
+
 Good clone options/tooltip

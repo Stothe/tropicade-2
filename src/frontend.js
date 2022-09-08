@@ -13,6 +13,7 @@ import GameListRender from "./components/game-list-render";
 import gameListEngine from "./util/game-list-engine";
 import CheckboxControl from "./components/checkbox-control.js";
 import MiscSettingsFormPart from "./components/misc-settings-form-part.js";
+import CategoryFormPart from "./components/category-form-part.js"
 
 const divsToUpdate = document.querySelectorAll(".form-goes-here");
 divsToUpdate.forEach(function (div) {
@@ -23,6 +24,7 @@ function Form() {
 	// const tempArray = [];
 	const [nplayersClicked, setNplayersClicked] = useState(["2P alt", "2P sim", "3P alt", "4P alt"]);
 	const [controlsClicked, setControlsClicked] = useState(["joy2way", "vjoy2way", "joy4way", "joy8way"]);
+	const [categoriesClicked, setCategoriesClicked] = useState([]);
 	const [numButtons, setNumButtons] = useState(6);
 	const [gamesFiltered, setGamesFiltered] = useState([]);
 	const [screenOrientation, setScreenOrientation] = useState(["0","90"])
@@ -34,6 +36,7 @@ function Form() {
 		"pc10",
 		"vs"
 	]);
+
 
 	const handleOrientationSelect = (e) => {
 		if (e.target.checked) {
@@ -67,6 +70,14 @@ function Form() {
 		}
 	};
 
+	const handleCategoriesSelect = (e) => {
+		if (e.target.checked) {
+			setCategoriesClicked([...categoriesClicked, e.target.value]);
+		} else {
+			setCategoriesClicked(filter(categoriesClicked, (v) => v !== e.target.value));
+		}
+	};
+
 	const handleGamesFiltered = (e) => {
 		setGamesFiltered(e);
 	}
@@ -81,6 +92,13 @@ function Form() {
 						onChangeHandler={(event) => handleHiddenSelect(event)}
 						onOrientationHandler={(event) => handleOrientationSelect(event)}	
 					/>
+				</div>
+				<div>
+				<CategoryFormPart 
+					selectedValues={categoriesClicked}
+					onChangeHandler={(event) => handleCategoriesSelect(event)}
+					hideCats={hideCats}
+				/>
 				</div>
 				<ControlsFormPart
 					selectedValues={controlsClicked}
@@ -100,7 +118,8 @@ function Form() {
 							numButtons,
 							hideCats,
 							screenOrientation,
-							handleGamesFiltered
+							handleGamesFiltered,
+							categoriesClicked
 						);
 					}}>
 						{" "}

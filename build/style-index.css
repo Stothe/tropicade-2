@@ -48,4 +48,9 @@
   margin-bottom: 0px;
 }
 
+.category-fieldset {
+  -moz-columns: 3;
+       columns: 3;
+}
+
 /*# sourceMappingURL=style-index.css.map*/

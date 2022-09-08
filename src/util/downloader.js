@@ -15,25 +15,19 @@ export default function downloadToFile(
 	filename = "test.txt",
 	contentType = "text"
 ) {
-	// const mode = "copyStub";
-	const getGenre = (e) => {
-		const findrom = find(supplemental, { rom: e }).genre;
-		return findrom ? findrom : "";
-	};
 
 	//grab fields we need and format it as a text file.
 	let amContent =
 		"#Name;Title;Emulator;CloneOf;Year;Manufacturer;Category;Players;Rotation;Control;Status;DisplayCount;DisplayType;AltRomname;AltTitle;Extra;Buttons\n";
 	let content = "";
-	const catArray =[];
-	const createBatRoot = map(games, (e) => {		
+		const createBatRoot = map(games, (e) => {		
 		const name = e.rom;
 		const title = e.title;
 		const emulator = "Arcade";
 		const cloneOf = e.clone ? e.clone : "";
 		const year = e.year ? e.year : "";
 		const manufacturer = e.manufacturer ? e.manufacturer : "";
-		const category = getGenre(e.rom); //need a category *&^#
+		const category = e.genre; 
 		const players = e.players;
 		const rotation = e.rotation ? e.rotation : "";
 		const control = e.control;
@@ -45,7 +39,6 @@ export default function downloadToFile(
 		const extra = "";
 		const buttons = e.buttons;
 
-		catArray.push(category.split(',')[0])
 		if (mode === "attract") {
 			if(e.gamelistIgonre) {
 				return
@@ -86,8 +79,6 @@ export default function downloadToFile(
 				";" +
 				buttons +
 				"\n";
-
-				console.log(new Set(catArray));
 		} else if(mode==="copyStub") {
 			content = content + "copy %path_to_Source_dir%" + name + ".zip %path_to_Target_dir% \n";
 		}

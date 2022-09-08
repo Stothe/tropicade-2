@@ -12,6 +12,7 @@ import Mature from "../json/mature.json";
 import Casino from "../json/casino.json";
 import Mahjong from "../json/mahjong.json";
 import NPlayers from "../json/nplayers.json";
+import supplementalList from "../json/supplemental-gamelist.json";
 
 export default function gameListEngine(
 	controlsClicked,
@@ -19,7 +20,8 @@ export default function gameListEngine(
 	numButtons,
 	hideCats,
 	screenOrientation,
-	handleGamesFiltered
+	handleGamesFiltered,
+	categoriesClicked
 ) {
 	let foundCount = 0;
 	let nullCount = 0;
@@ -64,6 +66,10 @@ export default function gameListEngine(
 			const working = e.driver._status;
 			const year = e.year;
 			const manufacturer = e.manufacturer;
+			const extraData = find(supplementalList, { rom: romName });
+			const genre = extraData.genre ? extraData.genre : "Not Classified";
+			const description = extraData.desc ? extraData.desc : "";
+			const parentCat = genre.length > 1 ? genre.split(",")[0] : genre;
 
 			//filter roms
 
@@ -123,6 +129,11 @@ export default function gameListEngine(
 				return;
 			}
 
+			//genre filter
+			if (categoriesClicked.indexOf(parentCat) >= 0) {
+				return;
+			}
+
 			//filter on nPlayers
 			// get nplayer value for rom
 			let players = NPlayers.find((p) => p.rom == romName);
@@ -132,7 +143,8 @@ export default function gameListEngine(
 				if (nplayersClicked.indexOf(players) < 0) {
 					return;
 				}
-			} catch {
+			} catch (error) {
+				console.log(error.message);
 				return;
 			}
 
@@ -148,9 +160,12 @@ export default function gameListEngine(
 				manufacturer: manufacturer,
 				year: year,
 				clone: clone,
+				genre: genre,
+				description: description,
 			});
 		} catch (error) {
 			//end generic error handling
+			// console.log(error.message);
 		}
 	});
 

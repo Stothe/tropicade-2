@@ -1,7 +1,8 @@
 /**
- * WP dependencies
+ * External dependencies
  */
 import { useState, useEffect } from "@wordpress/element";
+import {map} from "lodash";
 
 /**
  * local dependencies
@@ -16,7 +17,7 @@ export default function  ControlsFormPart({ selectedValues, onChangeHandler, ...
 			<fieldset className="controls-fieldset">
 				<legend>Select Controls</legend>
 				<div className="individual-control-checkboxes">
-					{Controls.map((e, index ) => {
+					{map (Controls, (e, index ) => {
 						return (
 							<CheckboxControl
                                 key={index}
