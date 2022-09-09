@@ -14,6 +14,17 @@
   border-radius: 5px;
 }
 
+.svg-button {
+  max-height: 0.8rem;
+  filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+}
+
+.legend-with-button {
+  display: flex;
+  flex: auto;
+  gap: 0.5rem;
+}
+
 .controls-fieldset .individual-control-checkboxes {
   -moz-columns: 2;
        columns: 2;
@@ -62,6 +73,10 @@
 }
 .gamelist-table .list-row .list-trash-btn {
   filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+}
+
+.category-fieldset-collapsed {
+  padding-bottom: 0;
 }
 
 /*# sourceMappingURL=style-index.css.map*/

@@ -1,7 +1,7 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "@wordpress/element";
 import * as ReactDOM from "react-dom";
 import { map, filter, orderBy, find, findKey } from "lodash";
 
