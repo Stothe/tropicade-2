@@ -12,6 +12,18 @@
 	border-radius: 5px;
 }
 
+.svg-button {
+	max-height: 0.8rem;
+	filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
+		brightness(106%) contrast(100%);
+}
+
+.legend-with-button {
+	display: flex;
+	flex: auto;
+	gap: 0.5rem;
+}
+
 .controls-fieldset {
 	.individual-control-checkboxes {
 		columns: 2;
@@ -59,8 +71,13 @@
 		.gl-year {
 			vertical-align: top;
 		}
-		.list-trash-btn{
-			filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+		.list-trash-btn {
+			filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
+				brightness(106%) contrast(100%);
 		}
 	}
+}
+
+.category-fieldset-collapsed {
+	padding-bottom: 0;
 }

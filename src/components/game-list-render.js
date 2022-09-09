@@ -19,7 +19,6 @@ export default function GameListRender({ games, onChangeHandler}) {
 
 	return (
 		<>
-		<trash />
 			<div className="game-list-action-span">
 				<div>{games.length} games</div>
 				<div>
