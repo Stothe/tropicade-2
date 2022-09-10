@@ -3,7 +3,6 @@
  */
 import { map, includes } from "lodash";
 import { useState } from "@wordpress/element";
-import Dashicon from "@wordpress/components";
 
 /**
  * internal deps
