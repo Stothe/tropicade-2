@@ -13,9 +13,45 @@ Todo
 disable console.logs 
 
 Strip parens? (what about clonses??)
-
-category filters (oh boy!)
+)
 
 Detail card
 
 Good clone options/tooltip
+
+buttons
+: 
+2
+clone
+: 
+false
+control
+: 
+"joy8way"
+description
+: 
+"Capcom CPS-II cart. published 26 years ago:\n\n19XX - The War Against Destiny (c) 1996 Capcom USA, Incorporated.\n\nNorth American & European release. Game developed in Japan. For more information about the game itself, please see the original Japanese release entry; \"19XX - The War Against Destiny [Green Board]\"."
+genre
+: 
+"Shooter, Flying Vertical"
+manufacturer
+: 
+"Capcom"
+players
+: 
+"2P sim"
+rom
+: 
+"19xx"
+rotation
+: 
+"270"
+status
+: 
+"good"
+title
+: 
+"19XX: The War Against Destiny (USA 951207)"
+year
+: 
+"1996"
