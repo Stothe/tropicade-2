@@ -115,7 +115,6 @@ function Form() {
 	const handleGameDelete = (e) => {
 		e.preventDefault();
 		const rom = e.target.value;
-		console.log(rom);
 		setGamesFiltered(filter(gamesFiltered, (g) => g.rom !== rom));
 	};
 
@@ -126,7 +125,6 @@ function Form() {
 	};
 
 	const closeGameDetail = (e) => {
-		console.log("close requested");
 		setOpenGameDetail(false);
 	};
 
