@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:       Tropicade ROM Manager
- * Description:       FFF UIUUU.
+ * Description:       Beta version. Block renders the Rom List on the front end
  * Requires at least: 5.9
  * Requires PHP:      7.0
- * Version:           0.1.0
- * Author:            The WordPress Contributors
+ * Version:           0.0.5
+ * Author:            @Stothe
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       tropicade-2

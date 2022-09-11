@@ -1,7 +1,7 @@
 /**
  * external deps
  */
-import { map, includes } from "lodash";
+import { map, includes, filter} from "lodash";
 import { useState } from "@wordpress/element";
 
 /**
@@ -19,6 +19,14 @@ export default function CategoryFormPart({
 	hideCats,
 	...props
 }) {
+
+	/**
+	 * test code
+	 */
+
+	/**
+	 * end test code
+	 */
 	const [showSection, setShowSection] = useState(false);
 	const toggleSection = () => setShowSection(!showSection);
 	const childSet = new Set();

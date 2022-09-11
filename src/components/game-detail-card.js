@@ -9,7 +9,6 @@ import { useState } from "@wordpress/element";
  */
 import { CustomButton } from "./checkbox-control.js";
 import Trash from "../img/trash.svg";
-import Xcircle from "../img/x-circle.svg";
 
 export default function GameCardModal({
 	game,
@@ -25,28 +24,31 @@ export default function GameCardModal({
 		<>
 			{openGameDetail && (
 				<Modal
-					title=<img
-						src={
-							"http://adb.arcadeitalia.net/?mame=" +
-							game.rom +
-							"&type=marquee&resize=600"
-						}
-						alt={game.title}
-					/>
+					// title=<img
+					// 	src={
+					// 		"/wp-content/uploads/marquees/"+game.rom+".png"
+					// 	}
+					// 	alt={game.title}
+					// />
+					title={
+						<object
+							data={
+								"https://raw.githubusercontent.com/Stothe/marquees/main/" +
+								game.rom +
+								".png"
+							}
+							type="image/png"
+						>
+							<img
+								src="https://tropicade.org/wp-content/uploads/2020/10/tropicade-trans.png"
+								alt={game.title}
+							/>
+						</object>
+					}
 					onRequestClose={closeModal}
 					className="game-card-modal"
 				>
 					<div className="game-card-body">
-						<div className="game-card-close">
-							<CustomButton
-								type="image"
-								alt="delete button"
-								className="game-card-close-button"
-								src={Xcircle}
-								value={game.rom}
-								onClick={closeModal}
-							/>
-						</div>
 						<div className="game-card-item-container">
 							<div className="game-title-div">
 								<h2 className="game-title"> {game.title}</h2>
@@ -93,34 +95,26 @@ export default function GameCardModal({
 									</div>
 								</div>
 								<div className="game-card-screenshot">
-									<img
-										src={
-											"http://adb.arcadeitalia.net/?mame=" +
+									<object
+										data={
+											"https://raw.githubusercontent.com/Stothe/screenshots/main/" +
 											game.rom +
-											"&type=ingame&resize=0"
+											".png"
 										}
-										alt={game.title + " screenshot"}
-									/>
+										type="image/png"
+									>
+										<img
+											src="https://raw.githubusercontent.com/Stothe/screenshots/main/gamenotfound.png"
+											alt={game.title}
+										/>
+									</object>
+									
 								</div>
 							</div>
 
 							<h3 className="game-card-description-heading">Description:</h3>
 							<div className="game-card-description-text">
 								{game.description}
-							</div>
-							<div className="game-card-image-credit">
-								images via
-								<br />
-								<a
-									href="http://adb.arcadeitalia.net/default.php"
-									target="_blank"
-								>
-									<img
-										src="http://adb.arcadeitalia.net/css/images/arcade_database_banner1.png"
-										width="55"
-										alt="Arcade Database"
-									/>
-								</a>
 							</div>
 						</div>
 					</div>
