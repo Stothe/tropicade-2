@@ -1,8 +1,8 @@
 /**
  * external deps
  */
-import { map, includes, filter} from "lodash";
-import { useState } from "@wordpress/element";
+import { map, includes, filter } from "lodash";
+import { useState, useReducer } from "@wordpress/element";
 
 /**
  * internal deps
@@ -15,20 +15,13 @@ import RightArrow from "../img/rightarrow.svg";
 
 export default function CategoryFormPart({
 	selectedValues,
-	onChangeHandler,
 	hideCats,
+	boxesDispatch,
 	...props
 }) {
-
-	/**
-	 * test code
-	 */
-
-	/**
-	 * end test code
-	 */
-	const [showSection, setShowSection] = useState(false);
-	const toggleSection = () => setShowSection(!showSection);
+	
+	const [showSection, setShowSection] = useState(false)
+	const onClickHandler = () => {setShowSection( ! showSection)}
 	const childSet = new Set();
 	const parentSet = new Set();
 	const casinoCats = ["Casino", "Slot Machine"];
@@ -62,10 +55,12 @@ export default function CategoryFormPart({
 						Hide Categories{" "}
 						<CustomButton
 							type="image"
+							value='test'
 							src={DownArrow}
-							onClick={toggleSection}
+							onClick={onClickHandler}
 							className="svg-button"
 							alt="click to collapse"
+							payload="Hello World!"
 						/>
 					</legend>
 					<div className="category-checkboxes">
@@ -75,7 +70,7 @@ export default function CategoryFormPart({
 									key={index}
 									label={e}
 									value={e}
-									onChange={onChangeHandler}
+									onChange={() => boxesDispatch({ type: "category"}, event)}
 								/>
 							);
 						})}
@@ -93,7 +88,7 @@ export default function CategoryFormPart({
 							<CustomButton
 								type="image"
 								src={RightArrow}
-								onClick={toggleSection}
+								onClick={onClickHandler}
 								className="svg-button"
 								alt="click to expand"
 							/>

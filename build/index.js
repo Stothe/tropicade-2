@@ -122,19 +122,12 @@ __webpack_require__.r(__webpack_exports__);
 function NPlayersFormPart(_ref) {
   let {
     selectedValues,
-    onChangeHandler,
+    boxesDispatch,
     ...props
   } = _ref;
   const [weirdChecked, setWeirdChecked] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
 
-  const handleWeirdClick = () => setWeirdChecked(!weirdChecked); // const handleNplayersSelect = (e) => {
-  //     if (e.target.checked) {
-  //         setNplayersClicked([...nplayersClicked, e.target.value]);            
-  //       } else {
-  //         setNplayersClicked(filter(nplayersClicked, (v) => v !== e.target.value));           
-  //       }
-  //     };
-
+  const handleWeirdClick = () => setWeirdChecked(!weirdChecked);
 
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", {
     class: "num-players-fieldset"
@@ -154,7 +147,9 @@ function NPlayersFormPart(_ref) {
         key: index,
         label: control.label,
         value: control.value,
-        onChange: onChangeHandler,
+        onChange: () => boxesDispatch({
+          type: "nPlayersClicked"
+        }, event),
         defaultChecked: control.default
       });
     } else if (weirdChecked) {
@@ -162,7 +157,9 @@ function NPlayersFormPart(_ref) {
         key: index,
         label: control.label,
         value: control.value,
-        onChange: onChangeHandler
+        onChange: () => boxesDispatch({
+          type: "nPlayersClicked"
+        }, event)
       });
     }
   }))));
