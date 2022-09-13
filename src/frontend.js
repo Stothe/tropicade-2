@@ -1,7 +1,7 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { useState, useEffect } from "@wordpress/element";
+import { useState, useEffect, useReducer } from "@wordpress/element";
 import * as ReactDOM from "react-dom";
 import { map, filter, orderBy, find, findKey } from "lodash";
 
@@ -16,97 +16,48 @@ import MiscSettingsFormPart from "./components/misc-settings-form-part.js";
 import CategoryFormPart from "./components/category-form-part.js";
 import GameCardModal from "./components/game-detail-card";
 
-const testGame = {
-	rom: "1944",
-	control: "joy8way",
-	buttons: 2,
-	title: "1944: The Loop Master (USA 000620)",
-	players: "2P sim",
-	rotation: "0",
-	status: "good",
-	manufacturer: "Eighting / Raizing (Capcom license)",
-	year: "2000",
-	clone: false,
-	genre: "Shooter, Flying Vertical",
-	description:
-		'Capcom CPS-II cart. published 22 years ago:\n\n1944 - The Loop Master (c) 2000 Capcom Ent., Inc.\n\nNorth American release. Game developed in Japan. For more information about the game itself, please see the original Japanese release entry; "1944 - The Loop Master [Green Board]" (Japan 000620).',
-};
-
 const divsToUpdate = document.querySelectorAll(".form-goes-here");
 divsToUpdate.forEach(function (div) {
 	ReactDOM.render(<Form />, div);
 });
 
 function Form() {
-	const [nplayersClicked, setNplayersClicked] = useState([
-		"2P alt",
-		"2P sim",
-		"3P alt",
-		"4P alt",
-	]);
-	const [controlsClicked, setControlsClicked] = useState([
-		"joy2way",
-		"vjoy2way",
-		"joy4way",
-		"joy8way",
-	]);
-	const [categoriesClicked, setCategoriesClicked] = useState([]);
+	/**
+	 * Checkboxes reducer
+	 */
+	const boxesInitialState = {
+		category: [],
+		nplayersClicked: ["2P alt", "2P sim", "3P alt", "4P alt"],
+		filters: ["clones", "mature", "casino", "mahjong", "pc10", "vs"],
+		controlsClicked: ["joy2way", "vjoy2way", "joy4way", "joy8way"],
+		screenOrientation: ["0", "90"]
+	};
+
+	const [boxesState, boxesDispatch] = useReducer(
+		boxesReducer,
+		boxesInitialState
+	);
+
+	function boxesReducer(boxesState, action) {
+		const value = event.target.value;
+		const boxType = action.type;
+		switch (event.target.checked) {
+			case true:
+				return { ...boxesState, [boxType]: [...boxesState[boxType], value] };
+			case false:
+				return {
+					...boxesState,
+					[boxType]: filter(boxesState[boxType], (e) => e !== value),
+				};
+			default:
+				console.log("oops state action failed");
+		}
+	}
+
 	const [openGameDetail, setOpenGameDetail] = useState(false);
 	const [numButtons, setNumButtons] = useState(6);
 	const [gamesFiltered, setGamesFiltered] = useState([]);
-	const [screenOrientation, setScreenOrientation] = useState(["0", "90"]);
 	const [selectedGame, setSelectedGame] = useState(null);
-	const [hideCats, setHideCats] = useState([
-		"clones",
-		"mature",
-		"casino",
-		"mahjong",
-		"pc10",
-		"vs",
-	]);
-	const handleOrientationSelect = (e) => {
-		if (e.target.checked) {
-			setScreenOrientation([...screenOrientation, e.target.value]);
-		} else {
-			setScreenOrientation(
-				filter(screenOrientation, (h) => h !== e.target.value)
-			);
-		}
-	};
-
-	const handleHiddenSelect = (e) => {
-		if (e.target.checked) {
-			setHideCats([...hideCats, e.target.value]);
-		} else {
-			setHideCats(filter(hideCats, (h) => h !== e.target.value));
-		}
-	};
-
-	const handleNplayersSelect = (e) => {
-		if (e.target.checked) {
-			setNplayersClicked([...nplayersClicked, e.target.value]);
-		} else {
-			setNplayersClicked(filter(nplayersClicked, (v) => v !== e.target.value));
-		}
-	};
-
-	const handleControlsSelect = (e) => {
-		if (e.target.checked) {
-			setControlsClicked([...controlsClicked, e.target.value]);
-		} else {
-			setControlsClicked(filter(controlsClicked, (v) => v !== e.target.value));
-		}
-	};
-
-	const handleCategoriesSelect = (e) => {
-		if (e.target.checked) {
-			setCategoriesClicked([...categoriesClicked, e.target.value]);
-		} else {
-			setCategoriesClicked(
-				filter(categoriesClicked, (v) => v !== e.target.value)
-			);
-		}
-	};
 
 	const handleGamesFiltered = (e) => {
 		setGamesFiltered(e);
@@ -143,26 +94,25 @@ function Form() {
 					<MiscSettingsFormPart
 						numButtons={numButtons}
 						onButtonUpdateHandler={(event) => setNumButtons(event.target.value)}
-						onChangeHandler={(event) => handleHiddenSelect(event)}
-						onOrientationHandler={(event) => handleOrientationSelect(event)}
+						boxesDispatch={boxesDispatch}
 					/>
 				</div>
 				<div></div>
 				<div>
 					<CategoryFormPart
-						selectedValues={categoriesClicked}
-						onChangeHandler={(event) => handleCategoriesSelect(event)}
-						hideCats={hideCats}
+						selectedValues={boxesState.category}
+						hideCats={boxesState.filters}
+						boxesDispatch={boxesDispatch}
 					/>
 				</div>
 				<ControlsFormPart
-					selectedValues={controlsClicked}
-					onChangeHandler={(event) => handleControlsSelect(event)}
+					selectedValues={boxesState.controlsClicked}
+					onChangeHandler={boxesDispatch}
 				/>
 				<div>
 					<NPlayersFormPart
-						selectedValues={nplayersClicked}
-						onChangeHandler={(event) => handleNplayersSelect(event)}
+						selectedValues={boxesState.nplayersClicked}
+						boxesDispatch={boxesDispatch}
 					/>
 				</div>
 				<div>
@@ -170,13 +120,9 @@ function Form() {
 						variant="primary"
 						onClick={() => {
 							gameListEngine(
-								controlsClicked,
-								nplayersClicked,
 								numButtons,
-								hideCats,
-								screenOrientation,
 								handleGamesFiltered,
-								categoriesClicked
+								boxesState
 							);
 						}}
 					>

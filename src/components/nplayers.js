@@ -1,7 +1,7 @@
 /**
  * external dependencies
  */
- import { useState, useEffect } from '@wordpress/element'
+ import { useState } from '@wordpress/element'
  import { map, filter } from "lodash";
 
 /**
@@ -10,17 +10,10 @@
 import Players from "../json/number-players-options.json";
 import CheckboxControl from "./checkbox-control.js";
 
-export default function NPlayersFormPart({ selectedValues, onChangeHandler, ...props}) {
+export default function NPlayersFormPart({ selectedValues, boxesDispatch, ...props}) {
 
     const [weirdChecked, setWeirdChecked] = useState(false);
     const handleWeirdClick = () => setWeirdChecked(!weirdChecked);
-    // const handleNplayersSelect = (e) => {
-    //     if (e.target.checked) {
-    //         setNplayersClicked([...nplayersClicked, e.target.value]);            
-    //       } else {
-    //         setNplayersClicked(filter(nplayersClicked, (v) => v !== e.target.value));           
-    //       }
-    //     };
 
     return (
         <div>
@@ -39,7 +32,7 @@ export default function NPlayersFormPart({ selectedValues, onChangeHandler, ...p
                                 key={index}
                                 label={control.label}
                                 value={control.value}
-                                onChange={onChangeHandler}
+                                onChange={() => boxesDispatch({ type: "nPlayersClicked"}, event)}
                                 defaultChecked={control.default}
                                 />
                        )
@@ -49,7 +42,7 @@ export default function NPlayersFormPart({ selectedValues, onChangeHandler, ...p
                                 key={index}
                                 label={control.label}
                                 value={control.value}
-                                onChange={onChangeHandler}
+                                onChange={() => boxesDispatch({ type: "nPlayersClicked"}, event)}
                                 />
                        )
                     }

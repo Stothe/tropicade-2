@@ -15,13 +15,10 @@ import NPlayers from "../json/nplayers.json";
 import supplementalList from "../json/supplemental-gamelist.json";
 
 export default function gameListEngine(
-	controlsClicked,
-	nplayersClicked,
 	numButtons,
-	hideCats,
-	screenOrientation,
 	handleGamesFiltered,
-	categoriesClicked
+	boxesState,
+	...props
 ) {
 	let foundCount = 0;
 	let nullCount = 0;
@@ -42,8 +39,8 @@ export default function gameListEngine(
 
 	const handleTwoPlayer = (e) => {
 		if (
-			nplayersClicked.indexOf("2P sim") >= 0 &&
-			nplayersClicked.indexOf("4P sim") < 0
+			boxesState.nplayersClicked.indexOf("2P sim") >= 0 &&
+			boxesState.nplayersClicked.indexOf("4P sim") < 0
 		) {
 			//push parent
 			const parentRom = find(gamesTargets, { _name: e._cloneof });
@@ -74,17 +71,20 @@ export default function gameListEngine(
 			//filter roms
 
 			//filter on orientation
-			if (screenOrientation.length < 2) {
+			if (boxesState.screenOrientation.length < 2) {
 				if (rotate === "270") {
 					rotate = "90";
 				}
-				if (screenOrientation.indexOf(rotate) < 0) {
+				if (boxesState.screenOrientation.indexOf(rotate) < 0) {
 					return;
 				}
 			}
 
 			//filter on controls and buttons
-			if (controlsClicked.indexOf(controller) < 0 || numButtons < buttons) {
+			if (
+				boxesState.controlsClicked.indexOf(controller) < 0 ||
+				numButtons < buttons
+			) {
 				return;
 			}
 
@@ -94,32 +94,44 @@ export default function gameListEngine(
 				if (goodClone.twoPlayer === true) {
 					handleTwoPlayer(e);
 				}
-			} else if (hideCats.indexOf("clones") > -1 && clone) {
+			} else if (boxesState.filters.indexOf("clones") > -1 && clone) {
 				return;
 			}
 
 			// if enabled, check rom name against mature, casino, mahjong filters
-			if (hideCats.indexOf("mature") > -1 && Mature.indexOf(romName) > -1) {
+			if (
+				boxesState.filters.indexOf("mature") > -1 &&
+				Mature.indexOf(romName) > -1
+			) {
 				//mature
 				return;
 			}
 
-			if (hideCats.indexOf("casino") > -1 && Casino.indexOf(romName) > -1) {
+			if (
+				boxesState.filters.indexOf("casino") > -1 &&
+				Casino.indexOf(romName) > -1
+			) {
 				//casino
 				return;
 			}
 
-			if (hideCats.indexOf("mahjong") > -1 && Mahjong.indexOf(romName) > -1) {
+			if (
+				boxesState.filters.indexOf("mahjong") > -1 &&
+				Mahjong.indexOf(romName) > -1
+			) {
 				//mahjong
 				return;
 			}
 
-			if (hideCats.indexOf("pc10") > -1 && romName.startsWith("pc_")) {
+			if (
+				boxesState.filters.indexOf("pc10") > -1 &&
+				romName.startsWith("pc_")
+			) {
 				//playchoice 10
 				return;
 			}
 
-			if (hideCats.indexOf("vs") > -1 && gameDesc.startsWith("Vs.")) {
+			if (boxesState.filters.indexOf("vs") > -1 && gameDesc.startsWith("Vs.")) {
 				//nintendo vs
 				return;
 			}
@@ -130,7 +142,7 @@ export default function gameListEngine(
 			}
 
 			//genre filter
-			if (categoriesClicked.indexOf(parentCat) >= 0) {
+			if (boxesState.category.indexOf(parentCat) >= 0) {
 				return;
 			}
 
@@ -140,7 +152,7 @@ export default function gameListEngine(
 			players = players.players;
 			// filter nplayer value against selected nplayers
 			try {
-				if (nplayersClicked.indexOf(players) < 0) {
+				if (boxesState.nplayersClicked.indexOf(players) < 0) {
 					return;
 				}
 			} catch (error) {
@@ -165,7 +177,7 @@ export default function gameListEngine(
 			});
 		} catch (error) {
 			//end generic error handling
-			// console.log(error.message);
+			// console.log(error);
 		}
 	});
 
