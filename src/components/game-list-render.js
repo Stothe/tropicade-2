@@ -5,7 +5,6 @@ import { map, find } from "lodash";
 import { Button, Dropdown, ToggleControl } from "@wordpress/components";
 import { useState } from "@wordpress/element";
 
-
 /**
  * Local deps
  */
@@ -14,14 +13,16 @@ import { CheckboxControl, CustomButton } from "./checkbox-control.js";
 import Trash from "../img/trash.svg";
 import GameDetailModal from "./game-detail-card.js";
 
-export default function GameListRender({ games, onChangeHandler, onClickHandler }) {
-	
+export default function GameListRender({
+	games,
+	onChangeHandler,
+	onClickHandler,
+}) {
 	const [singleGame, setSingleGame] = useState({});
 
-		
 	return (
 		<>
-				<div className="game-list-action-span">
+			<div className="game-list-action-span">
 				<div>{games.length} games</div>
 				<div>
 					<Dropdown
@@ -68,6 +69,9 @@ export default function GameListRender({ games, onChangeHandler, onClickHandler 
 
 				{map(games, (e) => {
 					const rom = e.rom;
+					if (!e.title) {
+						return;
+					}
 					return (
 						<tr className="list-row">
 							<td className="gl-trash">

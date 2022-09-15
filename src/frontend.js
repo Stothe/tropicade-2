@@ -15,6 +15,7 @@ import CheckboxControl from "./components/checkbox-control.js";
 import MiscSettingsFormPart from "./components/misc-settings-form-part.js";
 import CategoryFormPart from "./components/category-form-part.js";
 import GameCardModal from "./components/game-detail-card";
+import SearchModal from "./components/search-box.js"
 
 const divsToUpdate = document.querySelectorAll(".form-goes-here");
 divsToUpdate.forEach(function (div) {
@@ -58,7 +59,6 @@ function Form() {
 	const [numButtons, setNumButtons] = useState(6);
 	const [gamesFiltered, setGamesFiltered] = useState([]);
 	const [selectedGame, setSelectedGame] = useState(null);
-
 	const handleGamesFiltered = (e) => {
 		setGamesFiltered(e);
 	};
@@ -69,7 +69,13 @@ function Form() {
 		setGamesFiltered(filter(gamesFiltered, (g) => g.rom !== rom));
 	};
 
+	const handleGameAdd = (e, game) => {
+		e.preventDefault();
+		setGamesFiltered([...gamesFiltered, game]);
+	};
+
 	const toggleGameList = (event, game) => {
+		console.log('data', event, game)
 		event.preventDefault();
 		setSelectedGame(game);
 		setOpenGameDetail(true);
@@ -129,6 +135,7 @@ function Form() {
 						{" "}
 						Let's Go!{" "}
 					</Button>
+					<SearchModal openGameCard={toggleGameList} onClickHandler={handleGameAdd} />
 				</div>
 				{gamesFiltered.length > 0 ? (
 					<GameListRender
