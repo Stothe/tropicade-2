@@ -2,7 +2,7 @@
  * external deps
  */
 import { Modal } from "@wordpress/components";
-import { useState } from "@wordpress/element";
+import { useState, useCallback } from "@wordpress/element";
 
 /**
  * internal deps
@@ -20,30 +20,25 @@ export default function GameCardModal({
 		onChangeHandler(event);
 		closeModal(event);
 	};
+
 	return (
 		<>
 			{openGameDetail && (
 				<Modal
-					// title=<img
-					// 	src={
-					// 		"/wp-content/uploads/marquees/"+game.rom+".png"
-					// 	}
-					// 	alt={game.title}
-					// />
 					title={
-						<object
-							data={
+						<img
+							src={
 								"https://raw.githubusercontent.com/Stothe/marquees/main/" +
 								game.rom +
 								".png"
 							}
-							type="image/png"
-						>
-							<img
-								src="https://tropicade.org/wp-content/uploads/2020/10/tropicade-trans.png"
-								alt={game.title}
-							/>
-						</object>
+							onError={({ currentTarget }) => {
+								currentTarget.onerror = null; // prevents looping
+								currentTarget.src =
+									"https://tropicade.org/wp-content/uploads/2020/10/tropicade-trans.png";
+							}}
+							alt={game.title}
+						/>
 					}
 					onRequestClose={closeModal}
 					className="game-card-modal"
@@ -95,20 +90,19 @@ export default function GameCardModal({
 									</div>
 								</div>
 								<div className="game-card-screenshot">
-									<object
-										data={
+									<img
+										src={
 											"https://raw.githubusercontent.com/Stothe/screenshots/main/" +
 											game.rom +
 											".png"
 										}
-										type="image/png"
-									>
-										<img
-											src="https://raw.githubusercontent.com/Stothe/screenshots/main/gamenotfound.png"
-											alt={game.title}
-										/>
-									</object>
-									
+										onError={({ currentTarget }) => {
+											currentTarget.onerror = null; // prevents looping
+											currentTarget.src =
+												"https://raw.githubusercontent.com/Stothe/screenshots/main/gamenotfound.png";
+										}}
+										alt={game.title}
+									/>
 								</div>
 							</div>
 
