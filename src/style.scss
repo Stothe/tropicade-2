@@ -91,7 +91,7 @@ body > div.components-modal__screen-overlay > div {
 	padding: 2rem;
 	transform: translate(-50%, -50%);
 	z-index: 100;
-	width: 40vw;
+	max-width: 80vw;
 	max-height: 90%;
 	margin-top: 1rem;
 	background-color: #21759b;
@@ -104,12 +104,12 @@ body > div.components-modal__screen-overlay > div {
 
 	.components-modal__content {
 		margin-top: 0px;
-
 	}
 	.components-modal__header {
 		position: relative;
-		display: block;	
+		display: block;
 		height: auto;
+		overflow: hidden;
 		text-align: center;
 		button {
 			position: absolute;
