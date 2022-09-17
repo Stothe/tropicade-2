@@ -20,7 +20,7 @@ export default function gameListEngine(
 	handleGamesFiltered,
 	boxesState,
 	searchText,
-	jobType = "list"
+	jobType = "list",
 ) {
 	let foundCount = 0;
 	let nullCount = 0;

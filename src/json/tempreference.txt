@@ -20,3 +20,11 @@ gamelistIgonre: true -> don't display on list
 
 Good clone options/tooltip
 
+
+search: modal or replace filter?
+
+search - add: add parent when clones added
+
+search/gamecard update action based on rom in list already
+
+

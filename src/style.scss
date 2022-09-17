@@ -1,8 +1,6 @@
 /**
  * The following styles get applied both on the front of your site
  * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
  */
 
 .form-goes-here {
@@ -10,57 +8,67 @@
 	color: #fff;
 	padding: 2px;
 	border-radius: 5px;
-}
 
-.svg-button {
-	max-height: 0.8rem;
-	filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
-		brightness(106%) contrast(100%);
-}
-
-.legend-with-button {
-	display: flex;
-	flex: auto;
-	gap: 0.5rem;
-}
-
-.controls-fieldset {
-	.individual-control-checkboxes {
-		columns: 2;
+	.filter-heading {
+		text-align: center;
+		font-size: 2rem;
 	}
-	.components-checkbox-control__label {
-		font-size: 1.3rem;
+
+	.svg-button {
+		max-height: 0.8rem;
+		filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
+			brightness(106%) contrast(100%);
+	}
+
+	.legend-with-button {
+		display: flex;
+		flex: auto;
+		gap: 0.5rem;
+	}
+
+	.controls-fieldset {
+		.individual-control-checkboxes {
+			columns: 2;
+		}
+		.components-checkbox-control__label {
+			font-size: 1.3rem;
+		}
+	}
+
+	.num-players-fieldset {
+		.players-checkbox-div {
+			columns: 2;
+			margin-left: 1.5rem;
+		}
+	}
+
+	.flex-wrapper {
+		display: flex;
+		flex: auto;
+		.filter-settings {
+			columns: 2;
+			margin-left: 1rem;
+		}
+	}
+
+	.screen-orientation div {
+		margin-top: -0.5rem;
+		margin-bottom: 0px;
+	}
+
+	.buttons-select {
+		margin-top: 0.5rem;
+		margin-bottom: 0px;
+	}
+
+	.category-fieldset {
+		columns: 3;
 	}
 }
 
-.num-players-fieldset {
-	.players-checkbox-div {
-		columns: 2;
-		margin-left: 1.5rem;
-	}
-}
-
-.flex-wrapper {
-	display: flex;
-	flex: auto;
-	.filter-settings {
-		columns: 2;
-		margin-left: 1rem;
-	}
-}
-
-.screen-orientation div {
-	margin-top: -0.5rem;
-	margin-bottom: 0px;
-}
-
-.buttons-select {
-	margin-top: 0.5rem;
-	margin-bottom: 0px;
-}
-
-.category-fieldset {
-	columns: 3;
+.div-filter-submit-button{
+	float: right;
+	margin: 1rem;
 }
 
 .gamelist-table {
@@ -92,6 +100,9 @@ body > div.components-modal__screen-overlay > div {
 	transform: translate(-50%, -50%);
 	z-index: 100;
 	max-width: 80vw;
+	@media only screen and (min-width: 1080px) {
+		max-width: 900px;
+	}
 	max-height: 90%;
 	margin-top: 1rem;
 	background-color: #21759b;
@@ -162,9 +173,5 @@ body > div.components-modal__screen-overlay > div {
 	}
 	.game-card-description-text {
 		max-height: 50%;
-	}
-	.game-card-image-credit {
-		float: right;
-		font-size: 0.6rem;
 	}
 }

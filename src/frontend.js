@@ -1,21 +1,21 @@
-import { useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
-import { useState, useEffect, useReducer } from "@wordpress/element";
+import { useState, useReducer } from "@wordpress/element";
 import * as ReactDOM from "react-dom";
-import { map, filter, orderBy, find, findKey } from "lodash";
+import {filter, find } from "lodash";
 
 import "./style.scss";
-// import Mame from './json/mame2003.json';
-import ControlsFormPart from "./components/controls-form-part";
-import NPlayersFormPart from "./components/nplayers";
-import GameListRender from "./components/game-list-render";
+import {
+	ControlsFormPart,
+	NPlayersFormPart,
+	GameListRender,
+	CheckBoxControl,
+	MiscSettingsFormPart,
+	CategoryFormPart,
+	GameCardModal,
+	SearchModal,
+	FilterHeading,
+} from "./components";
 import gameListEngine from "./util/game-list-engine";
-import CheckboxControl from "./components/checkbox-control.js";
-import MiscSettingsFormPart from "./components/misc-settings-form-part.js";
-import CategoryFormPart from "./components/category-form-part.js";
-import GameCardModal from "./components/game-detail-card";
-import SearchModal from "./components/search-box.js"
 
 const divsToUpdate = document.querySelectorAll(".form-goes-here");
 divsToUpdate.forEach(function (div) {
@@ -31,7 +31,7 @@ function Form() {
 		nplayersClicked: ["2P alt", "2P sim", "3P alt", "4P alt"],
 		filters: ["clones", "mature", "casino", "mahjong", "pc10", "vs"],
 		controlsClicked: ["joy2way", "vjoy2way", "joy4way", "joy8way"],
-		screenOrientation: ["0", "90"]
+		screenOrientation: ["0", "90"],
 	};
 
 	const [boxesState, boxesDispatch] = useReducer(
@@ -59,8 +59,12 @@ function Form() {
 	const [numButtons, setNumButtons] = useState(6);
 	const [gamesFiltered, setGamesFiltered] = useState([]);
 	const [selectedGame, setSelectedGame] = useState(null);
+	const [singleGameAdded, setSingleGameAdded] = useState(false);
 	const handleGamesFiltered = (e) => {
-		setGamesFiltered(e);
+		singleGameAdded
+			? setGamesFiltered([...gamesFiltered, ...e])
+			: setGamesFiltered(e);
+		setSingleGameAdded(false);
 	};
 
 	const handleGameDelete = (e) => {
@@ -72,10 +76,10 @@ function Form() {
 	const handleGameAdd = (e, game) => {
 		e.preventDefault();
 		setGamesFiltered([...gamesFiltered, game]);
+		setSingleGameAdded(true);
 	};
 
 	const toggleGameList = (event, game) => {
-		console.log('data', event, game)
 		event.preventDefault();
 		setSelectedGame(game);
 		setOpenGameDetail(true);
@@ -95,56 +99,61 @@ function Form() {
 					onChangeHandler={handleGameDelete}
 				/>
 			) : null}
-			<form>
-				<div>
-					<MiscSettingsFormPart
-						numButtons={numButtons}
-						onButtonUpdateHandler={(event) => setNumButtons(event.target.value)}
-						boxesDispatch={boxesDispatch}
+			<div className="filters-wrapper">
+				<FilterHeading />
+				<form>
+					<div>
+						<MiscSettingsFormPart
+							numButtons={numButtons}
+							onButtonUpdateHandler={(event) =>
+								setNumButtons(event.target.value)
+							}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+					<div></div>
+					<div>
+						<CategoryFormPart
+							selectedValues={boxesState.category}
+							hideCats={boxesState.filters}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+					<ControlsFormPart
+						selectedValues={boxesState.controlsClicked}
+						onChangeHandler={boxesDispatch}
 					/>
-				</div>
-				<div></div>
-				<div>
-					<CategoryFormPart
-						selectedValues={boxesState.category}
-						hideCats={boxesState.filters}
-						boxesDispatch={boxesDispatch}
-					/>
-				</div>
-				<ControlsFormPart
-					selectedValues={boxesState.controlsClicked}
-					onChangeHandler={boxesDispatch}
-				/>
-				<div>
-					<NPlayersFormPart
-						selectedValues={boxesState.nplayersClicked}
-						boxesDispatch={boxesDispatch}
-					/>
-				</div>
-				<div>
-					<Button
-						variant="primary"
-						onClick={() => {
-							gameListEngine(
-								numButtons,
-								handleGamesFiltered,
-								boxesState
-							);
-						}}
-					>
-						{" "}
-						Let's Go!{" "}
-					</Button>
-					<SearchModal openGameCard={toggleGameList} onClickHandler={handleGameAdd} />
-				</div>
-				{gamesFiltered.length > 0 ? (
-					<GameListRender
-						games={gamesFiltered}
-						onChangeHandler={handleGameDelete}
-						onClickHandler={toggleGameList}
-					/>
-				) : null}
-			</form>
+					<div>
+						<NPlayersFormPart
+							selectedValues={boxesState.nplayersClicked}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+					<div className="div-filter-submit-button">
+						<Button
+							className="filter-submit-button"
+							variant="primary"
+							onClick={() => {
+								gameListEngine(numButtons, handleGamesFiltered, boxesState);
+							}}
+						>
+							{" "}
+							Let's Go!{" "}
+						</Button>
+						<SearchModal
+							openGameCard={toggleGameList}
+							onClickHandler={handleGameAdd}
+						/>
+					</div>
+					{gamesFiltered.length > 0 ? (
+						<GameListRender
+							games={gamesFiltered}
+							onChangeHandler={handleGameDelete}
+							onClickHandler={toggleGameList}
+						/>
+					) : null}
+				</form>
+			</div>
 		</div>
 	);
 }
