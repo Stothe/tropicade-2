@@ -1,20 +1,23 @@
-import { useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
-import { __ } from "@wordpress/i18n";
-import { useState, useEffect, useReducer } from "@wordpress/element";
+import { useState, useReducer, useDispatch } from "@wordpress/element";
 import * as ReactDOM from "react-dom";
-import { map, filter, orderBy, find, findKey } from "lodash";
+import { filter, find } from "lodash";
 
 import "./style.scss";
-// import Mame from './json/mame2003.json';
-import ControlsFormPart from "./components/controls-form-part";
-import NPlayersFormPart from "./components/nplayers";
-import GameListRender from "./components/game-list-render";
+import {
+	ControlsFormPart,
+	NPlayersFormPart,
+	GameListRender,
+	CheckBoxControl,
+	MiscSettingsFormPart,
+	CategoryFormPart,
+	GameCardModal,
+	SearchBox,
+	FilterHeading,
+	FilterWrapper,
+	FilterSubmitButton,
+} from "./components";
 import gameListEngine from "./util/game-list-engine";
-import CheckboxControl from "./components/checkbox-control.js";
-import MiscSettingsFormPart from "./components/misc-settings-form-part.js";
-import CategoryFormPart from "./components/category-form-part.js";
-import GameCardModal from "./components/game-detail-card";
 
 const divsToUpdate = document.querySelectorAll(".form-goes-here");
 divsToUpdate.forEach(function (div) {
@@ -23,6 +26,16 @@ divsToUpdate.forEach(function (div) {
 
 function Form() {
 	/**
+	 * States
+	 */
+
+	const [openGameDetail, setOpenGameDetail] = useState(false);
+	const [numButtons, setNumButtons] = useState(6);
+	const [gamesFiltered, setGamesFiltered] = useState([]);
+	const [selectedGame, setSelectedGame] = useState(null);
+	const [singleGameAdded, setSingleGameAdded] = useState(false);
+
+	/**
 	 * Checkboxes reducer
 	 */
 	const boxesInitialState = {
@@ -30,7 +43,7 @@ function Form() {
 		nplayersClicked: ["2P alt", "2P sim", "3P alt", "4P alt"],
 		filters: ["clones", "mature", "casino", "mahjong", "pc10", "vs"],
 		controlsClicked: ["joy2way", "vjoy2way", "joy4way", "joy8way"],
-		screenOrientation: ["0", "90"]
+		screenOrientation: ["0", "90"],
 	};
 
 	const [boxesState, boxesDispatch] = useReducer(
@@ -54,14 +67,57 @@ function Form() {
 		}
 	}
 
-	const [openGameDetail, setOpenGameDetail] = useState(false);
-	const [numButtons, setNumButtons] = useState(6);
-	const [gamesFiltered, setGamesFiltered] = useState([]);
-	const [selectedGame, setSelectedGame] = useState(null);
+	/**
+	 * generic reducer
+	 */
 
-	const handleGamesFiltered = (e) => {
-		setGamesFiltered(e);
+	const initialState = {
+		toggleFilter: true,
+		listShowing: false,
 	};
+
+	const [state, dispatch] = useReducer(reducer, initialState);
+
+	function reducer(state, action) {
+		switch (action.type) {
+			case "filterTrue":
+				return {
+					...state,
+					toggleFilter: true,
+				};
+			case "filterFalse":
+				return {
+					...state,
+					toggleFilter: false,
+				};
+			case "resetList":
+				setGamesFiltered([]);
+				return {
+					...state,
+					toggleFilter: true,
+					listShowing: false,
+				};
+			case "listShowing":
+				return {
+					...state,
+					listShowing: true,
+				};
+			default:
+				console.log("no generic state found");
+		}
+	}
+	/**
+	 * end reducers
+	 */
+
+	function handleGamesFiltered(e) {
+		if (singleGameAdded) {
+			setGamesFiltered([...gamesFiltered, ...e]);
+		} else {
+			setGamesFiltered(e);
+		}
+		setSingleGameAdded(false);
+	}
 
 	const handleGameDelete = (e) => {
 		e.preventDefault();
@@ -69,7 +125,13 @@ function Form() {
 		setGamesFiltered(filter(gamesFiltered, (g) => g.rom !== rom));
 	};
 
-	const toggleGameList = (event, game) => {
+	const handleGameAdd = (e, game) => {
+		e.preventDefault();
+		setGamesFiltered([...gamesFiltered, game]);
+		setSingleGameAdded(true);
+	};
+
+	const toggleGameDetail = (event, game) => {
 		event.preventDefault();
 		setSelectedGame(game);
 		setOpenGameDetail(true);
@@ -77,6 +139,12 @@ function Form() {
 
 	const closeGameDetail = (e) => {
 		setOpenGameDetail(false);
+	};
+
+	const handleCreate = () => {
+		gameListEngine(numButtons, handleGamesFiltered, boxesState);
+		dispatch({ type: "filterFalse" });
+		dispatch({ type: "listShowing" });
 	};
 
 	return (
@@ -89,52 +157,54 @@ function Form() {
 					onChangeHandler={handleGameDelete}
 				/>
 			) : null}
+			<SearchBox
+				openGameCard={toggleGameDetail}
+				onClickHandler={handleGameAdd}
+				dispatch={dispatch}
+				state={state}
+			/>
 			<form>
-				<div>
-					<MiscSettingsFormPart
-						numButtons={numButtons}
-						onButtonUpdateHandler={(event) => setNumButtons(event.target.value)}
-						boxesDispatch={boxesDispatch}
+				<FilterWrapper filterDisplay={state.toggleFilter}>
+					<FilterHeading />
+					<div>
+						<MiscSettingsFormPart
+							numButtons={numButtons}
+							onButtonUpdateHandler={(event) =>
+								setNumButtons(event.target.value)
+							}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+					<div></div>
+					<div>
+						<CategoryFormPart
+							selectedValues={boxesState.category}
+							hideCats={boxesState.filters}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+					<ControlsFormPart
+						selectedValues={boxesState.controlsClicked}
+						onChangeHandler={boxesDispatch}
 					/>
-				</div>
-				<div></div>
-				<div>
-					<CategoryFormPart
-						selectedValues={boxesState.category}
-						hideCats={boxesState.filters}
-						boxesDispatch={boxesDispatch}
-					/>
-				</div>
-				<ControlsFormPart
-					selectedValues={boxesState.controlsClicked}
-					onChangeHandler={boxesDispatch}
+					<div>
+						<NPlayersFormPart
+							selectedValues={boxesState.nplayersClicked}
+							boxesDispatch={boxesDispatch}
+						/>
+					</div>
+				</FilterWrapper>
+				<FilterSubmitButton
+					handleCreate={() => handleCreate()}
+					dispatch={dispatch}
+					state={state}
 				/>
-				<div>
-					<NPlayersFormPart
-						selectedValues={boxesState.nplayersClicked}
-						boxesDispatch={boxesDispatch}
-					/>
-				</div>
-				<div>
-					<Button
-						variant="primary"
-						onClick={() => {
-							gameListEngine(
-								numButtons,
-								handleGamesFiltered,
-								boxesState
-							);
-						}}
-					>
-						{" "}
-						Let's Go!{" "}
-					</Button>
-				</div>
+
 				{gamesFiltered.length > 0 ? (
 					<GameListRender
 						games={gamesFiltered}
 						onChangeHandler={handleGameDelete}
-						onClickHandler={toggleGameList}
+						onClickHandler={toggleGameDetail}
 					/>
 				) : null}
 			</form>

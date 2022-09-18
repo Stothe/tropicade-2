@@ -4,7 +4,7 @@
  * Description:       Beta version. Block renders the Rom List on the front end
  * Requires at least: 5.9
  * Requires PHP:      7.0
- * Version:           0.0.5
+ * Version:           0.0.7
  * Author:            @Stothe
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
