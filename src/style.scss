@@ -153,9 +153,10 @@ body > div.components-modal__screen-overlay > div {
 		display: flex;
 		justify-content: center;
 		align-items: baseline;
-		.game-card-delete {
+		.game-card-action {
 			margin-left: 1rem;
-			.game-card-trash {
+			.game-card-trash,
+			.game-card-add {
 				height: 1.4rem;
 				filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
 					brightness(106%) contrast(100%);
@@ -183,5 +184,28 @@ body > div.components-modal__screen-overlay > div {
 	}
 	.game-card-description-text {
 		max-height: 50%;
+	}
+}
+
+.search-results-list {
+	h2 {
+		text-align: center;
+		font-size: 2.5rem;
+	}
+	.search-results-list-table-row {
+		.search-results-title a {
+			color: white;
+		}
+		.search-results-action {
+			text-align: center;
+			filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg)
+				brightness(106%) contrast(100%);
+		}
+		.search-results-parent {
+			text-align: center;
+		}
+		.search-results-rom {
+			text-align: center;
+		}
 	}
 }

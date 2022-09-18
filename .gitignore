@@ -29,3 +29,8 @@ node_modules/
 # dotenv environment variables file
 .env
 src/json/tempreference.txt
+build/frontend.asset.php
+build/frontend.js
+build/frontend.js.map
+build/style-index.css
+build/style-index.css.map

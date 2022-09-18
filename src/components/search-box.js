@@ -3,26 +3,29 @@
  */
 import { Button, Modal, SearchControl } from "@wordpress/components";
 import { useState, useDispatch } from "@wordpress/element";
-import { map } from "lodash";
+import { map, find, filter } from "lodash";
 
 /**
  * Internal Deps
  */
 import gameListEngine from "../util/game-list-engine";
 import plus from "../img/plus.svg";
+import trash from "../img/trash.svg";
 import { CustomButton } from "./checkbox-control.js";
 
 export default function SearchBox({
 	openGameCard,
-	onClickHandler,
+	onAddGame,
+	onDelGame,
 	dispatch,
 	state,
+	isInList,
 }) {
 	const [searchText, setSearchText] = useState("");
 	const [results, setResults] = useState([]);
 	const [resultsText, setResultsText] = useState("");
 	const jobType = "search";
-
+	
 	const keyDownHandler = (e) => {
 		if (e.key === "Enter") {
 			onSearchHandler(searchText);
@@ -37,8 +40,14 @@ export default function SearchBox({
 		setResults(games);
 		setResultsText(searchText);
 	};
+
 	const onSearchHandler = () => {
 		gameListEngine(null, handleGamesFiltered, null, searchText, jobType);
+	};
+
+	const handleDelGame = (event) => {
+		setResults(filter(results, (g) => g.rom !== event.target.value));
+		onDelGame(event);
 	};
 
 	//functional components
@@ -67,7 +76,7 @@ export default function SearchBox({
 					</h2>
 					<table className="search-results-list-table">
 						<tr className="search-results-list-table-heading">
-							<th>Add to list</th>
+							<th>Action</th>
 							<th>Game Title</th>
 							<th>ROM</th>
 							<th>Parent ROM</th>
@@ -75,14 +84,25 @@ export default function SearchBox({
 						{map(results, (r) => {
 							return (
 								<tr className="search-results-list-table-row">
-									<td className="search-results-add">
-										<CustomButton
-											type="image"
-											alt="add button"
-											className="search-add-btn"
-											src={plus}
-											onClick={() => onClickHandler(event, r)}
-										/>
+									<td className="search-results-action">
+										{!isInList(r.rom) ? (
+											<CustomButton
+												type="image"
+												alt="add button"
+												className="search-add-btn"
+												src={plus}
+												onClick={() => onAddGame(event, r)}
+											/>
+										) : (
+											<CustomButton
+												type="image"
+												alt="delete button"
+												className="search-del-btn"
+												src={trash}
+												value={r.rom}
+												onClick={() => handleDelGame(event)}
+											/>
+										)}
 									</td>
 									<td className="search-results-title">
 										<a
@@ -111,19 +131,13 @@ export default function SearchBox({
 		<>
 			<div className="search-form">
 				<SearchControl
+					placeholder="Individual game search"
 					label="Title Search"
 					className="search-form-field"
 					value={searchText}
 					onChange={onChangeHandler}
 					onKeyDown={keyDownHandler}
 				/>
-				<Button
-					variant="primary"
-					onClick={() => onSearchHandler(searchText)}
-					className="search-form-submit"
-				>
-					Search
-				</Button>
 			</div>
 			<RenderResults />
 		</>
