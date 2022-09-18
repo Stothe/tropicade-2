@@ -102,6 +102,7 @@ function Form() {
 					...state,
 					listShowing: true,
 				};
+			
 			default:
 				console.log("no generic state found");
 		}
@@ -147,6 +148,16 @@ function Form() {
 		dispatch({ type: "listShowing" });
 	};
 
+	const isInList = (e) => {
+		if (!gamesFiltered || gamesFiltered.length < 1) {
+			return null;
+		} else if (!find(gamesFiltered, { rom: e })) {
+			return null;
+		} else {
+			return true;
+		}
+	};
+
 	return (
 		<div>
 			{selectedGame && openGameDetail ? (
@@ -154,16 +165,21 @@ function Form() {
 					game={selectedGame}
 					openGameDetail={openGameDetail}
 					closeModal={(event) => closeGameDetail(event)}
-					onChangeHandler={handleGameDelete}
+					onAddGame={handleGameAdd}
+					onDelGame={handleGameDelete}
+					isInList={isInList}
 				/>
 			) : null}
+			
+			<form>
 			<SearchBox
 				openGameCard={toggleGameDetail}
-				onClickHandler={handleGameAdd}
+				onAddGame={handleGameAdd}
+				onDelGame={handleGameDelete}
 				dispatch={dispatch}
 				state={state}
+				isInList={isInList}
 			/>
-			<form>
 				<FilterWrapper filterDisplay={state.toggleFilter}>
 					<FilterHeading />
 					<div>
@@ -193,7 +209,7 @@ function Form() {
 							boxesDispatch={boxesDispatch}
 						/>
 					</div>
-				</FilterWrapper>
+				</FilterWrapper>				
 				<FilterSubmitButton
 					handleCreate={() => handleCreate()}
 					dispatch={dispatch}
@@ -208,6 +224,7 @@ function Form() {
 					/>
 				) : null}
 			</form>
+			
 		</div>
 	);
 }

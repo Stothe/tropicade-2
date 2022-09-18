@@ -9,12 +9,15 @@ import { useState, useCallback } from "@wordpress/element";
  */
 import { CustomButton } from "./checkbox-control.js";
 import Trash from "../img/trash.svg";
+import Plus from "../img/plus.svg";
 
 export default function GameCardModal({
 	game,
 	openGameDetail,
 	closeModal,
-	onChangeHandler,
+	onAddGame,
+	onDelGame,
+	isInList,
 }) {
 	const deleteAndClose = (event) => {
 		onChangeHandler(event);
@@ -47,15 +50,26 @@ export default function GameCardModal({
 						<div className="game-card-item-container">
 							<div className="game-title-div">
 								<h2 className="game-title"> {game.title}</h2>
-								<div className="game-card-delete">
-									<CustomButton
-										type="image"
-										alt="delete button"
-										className="game-card-trash"
-										src={Trash}
-										value={game.rom}
-										onClick={deleteAndClose}
-									/>
+								<div className="game-card-action">
+									{isInList(game.rom) ? (
+										<CustomButton
+											type="image"
+											alt="delete button"
+											className="game-card-trash"
+											src={Trash}
+											value={game.rom}
+											onClick={() => onDelGame(event)}
+										/>
+									) : (
+										<CustomButton
+											type="image"
+											alt="add button"
+											className="game-card-add"
+											src={Plus}
+											value={game.rom}
+											onClick={() => onAddGame(event, game)}
+										/>
+									)}
 								</div>
 							</div>
 							<div className="game-card-flex-container">

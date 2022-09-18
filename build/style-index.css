@@ -4,8 +4,6 @@
 /**
  * The following styles get applied both on the front of your site
  * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
  */
 .form-goes-here {
   background-color: #21759b;
@@ -13,55 +11,65 @@
   padding: 2px;
   border-radius: 5px;
 }
-
-.svg-button {
+.form-goes-here .search-form {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+.form-goes-here .search-form .search-form-field {
+  width: 80%;
+}
+.form-goes-here .filter-heading {
+  text-align: center;
+  font-size: 2rem;
+}
+.form-goes-here .svg-button {
   max-height: 0.8rem;
   filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
 }
-
-.legend-with-button {
+.form-goes-here .legend-with-button {
   display: flex;
   flex: auto;
   gap: 0.5rem;
 }
-
-.controls-fieldset .individual-control-checkboxes {
+.form-goes-here .controls-fieldset .individual-control-checkboxes {
   -moz-columns: 2;
        columns: 2;
 }
-.controls-fieldset .components-checkbox-control__label {
+.form-goes-here .controls-fieldset .components-checkbox-control__label {
   font-size: 1.3rem;
 }
-
-.num-players-fieldset .players-checkbox-div {
+.form-goes-here .num-players-fieldset .players-checkbox-div {
   -moz-columns: 2;
        columns: 2;
   margin-left: 1.5rem;
 }
-
-.flex-wrapper {
+.form-goes-here .flex-wrapper {
   display: flex;
   flex: auto;
 }
-.flex-wrapper .filter-settings {
+.form-goes-here .flex-wrapper .filter-settings {
   -moz-columns: 2;
        columns: 2;
   margin-left: 1rem;
 }
-
-.screen-orientation div {
+.form-goes-here .screen-orientation div {
   margin-top: -0.5rem;
   margin-bottom: 0px;
 }
-
-.buttons-select {
+.form-goes-here .buttons-select {
   margin-top: 0.5rem;
   margin-bottom: 0px;
 }
-
-.category-fieldset {
+.form-goes-here .category-fieldset {
   -moz-columns: 3;
        columns: 3;
+}
+
+.div-filter-submit-button {
+  float: right;
+  margin: 1rem;
 }
 
 .gamelist-table {
@@ -99,6 +107,11 @@ body > div.components-modal__screen-overlay > div {
   border-radius: 10px;
   overflow: hidden;
 }
+@media only screen and (min-width: 1080px) {
+  body > div.components-modal__screen-overlay > div {
+    max-width: 900px;
+  }
+}
 body > div.components-modal__screen-overlay > div .components-modal__content {
   margin-top: 0px;
 }
@@ -129,10 +142,11 @@ body > div.components-modal__screen-overlay > div .game-title-div {
   justify-content: center;
   align-items: baseline;
 }
-body > div.components-modal__screen-overlay > div .game-title-div .game-card-delete {
+body > div.components-modal__screen-overlay > div .game-title-div .game-card-action {
   margin-left: 1rem;
 }
-body > div.components-modal__screen-overlay > div .game-title-div .game-card-delete .game-card-trash {
+body > div.components-modal__screen-overlay > div .game-title-div .game-card-action .game-card-trash,
+body > div.components-modal__screen-overlay > div .game-title-div .game-card-action .game-card-add {
   height: 1.4rem;
   filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
 }
@@ -157,9 +171,23 @@ body > div.components-modal__screen-overlay > div .game-card-flex-container .gam
 body > div.components-modal__screen-overlay > div .game-card-description-text {
   max-height: 50%;
 }
-body > div.components-modal__screen-overlay > div .game-card-image-credit {
-  float: right;
-  font-size: 0.6rem;
+
+.search-results-list h2 {
+  text-align: center;
+  font-size: 2.5rem;
+}
+.search-results-list .search-results-list-table-row .search-results-title a {
+  color: white;
+}
+.search-results-list .search-results-list-table-row .search-results-action {
+  text-align: center;
+  filter: invert(99%) sepia(92%) saturate(4%) hue-rotate(252deg) brightness(106%) contrast(100%);
+}
+.search-results-list .search-results-list-table-row .search-results-parent {
+  text-align: center;
+}
+.search-results-list .search-results-list-table-row .search-results-rom {
+  text-align: center;
 }
 
 /*# sourceMappingURL=style-index.css.map*/
