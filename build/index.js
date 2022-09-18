@@ -395,7 +395,7 @@ function _extends() {
   \********************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"tropicade/tropicadeweb","version":"0.0.7","title":"Tropicade ROM Manager","category":"common","icon":"smiley","description":"Manage MAME Romlists with ease.","supports":{"html":false},"textdomain":"tropicade-2","editorScript":"file:./build/index.js","editorStyle":"file:./build/index.css","style":"file:./build/style-index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"tropicade/tropicadeweb","version":"0.0.8","title":"Tropicade ROM Manager","category":"common","icon":"smiley","description":"Manage MAME Romlists with ease.","supports":{"html":false},"textdomain":"tropicade-2","editorScript":"file:./build/index.js","editorStyle":"file:./build/index.css","style":"file:./build/style-index.css"}');
 
 /***/ }),
 
