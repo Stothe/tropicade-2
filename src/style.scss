@@ -9,6 +9,16 @@
 	padding: 2px;
 	border-radius: 5px;
 
+	.search-form {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: space-around;
+		align-items: baseline;
+		.search-form-field {
+			width: 80%;
+		}
+	}
+
 	.filter-heading {
 		text-align: center;
 		font-size: 2rem;
@@ -66,7 +76,7 @@
 	}
 }
 
-.div-filter-submit-button{
+.div-filter-submit-button {
 	float: right;
 	margin: 1rem;
 }

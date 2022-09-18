@@ -5,8 +5,10 @@ import CheckboxControl from "./checkbox-control";
 import MiscSettingsFormPart from "./misc-settings-form-part";
 import CategoryFormPart from "./category-form-part";
 import GameCardModal from "./game-detail-card";
-import SearchModal from "./search-box";
+import SearchBox from "./search-box";
 import FilterHeading from "./filter-heading";
+import FilterWrapper from "./filter-wrapper";
+import FilterSubmitButton from "./filter-submit-button";
 
 export {
     ControlsFormPart,
@@ -16,6 +18,8 @@ export {
     MiscSettingsFormPart,
     CategoryFormPart,
     GameCardModal,
-    SearchModal,
-    FilterHeading
+    SearchBox,
+    FilterHeading,
+    FilterWrapper,
+    FilterSubmitButton
 }
