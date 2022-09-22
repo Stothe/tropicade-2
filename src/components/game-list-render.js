@@ -2,7 +2,12 @@
  * External deps
  */
 import { map, find } from "lodash";
-import { Button, Dropdown, ToggleControl } from "@wordpress/components";
+import {
+	Button,
+	Dropdown,
+	DropdownMenu,
+	ToggleControl,
+} from "@wordpress/components";
 import { useState } from "@wordpress/element";
 
 /**
@@ -19,6 +24,97 @@ export default function GameListRender({
 	onClickHandler,
 }) {
 	const [singleGame, setSingleGame] = useState({});
+	const [paginate, setPaginate] = useState([0, 24]);
+	const [resultsPerPage, setResultsPerPage] = useState(25);
+
+	const updateResultsPerPage = (e) => {
+		const numberPP = parseInt(e);
+		setResultsPerPage(numberPP);
+		setPaginate([paginate[0], paginate[0] + numberPP]);
+	};
+
+	const handlePaginateForward = () => {
+		if (resultsPerPage + paginate[1] > games.length) {
+			setPaginate([paginate[0] - resultsPerPage, games.length]);
+			return;
+		} else {
+			setPaginate(paginate.map((e) => e + resultsPerPage));
+		}
+	};
+
+	const handlePaginateBack = () => {
+		if (paginate[0] - resultsPerPage < 0) {
+			setPaginate([0, paginate[1]]);
+			return;
+		} else {
+			setPaginate(paginate.map((e) => e - resultsPerPage));
+		}
+	};
+
+	const ResultsPerPageDropdown = () => (
+		<DropdownMenu
+			label="results per page"
+			className="pagination-dropdown"
+			controls={[
+				{
+					title: "25",
+					onClick: () => updateResultsPerPage(25),
+				},
+				{
+					title: "50",
+					onClick: () => updateResultsPerPage(50),
+				},
+				{
+					title: "100",
+					onClick: () => updateResultsPerPage(100),
+				},
+				{
+					title: "500",
+					onClick: () => updateResultsPerPage(500),
+				},
+				{
+					title: "All",
+					onClick: () => updateResultsPerPage(games.length),
+				},
+			]}
+		/>
+	);
+
+	const PaginateControls = () => (
+		<div className="results-pagination-div">
+					<table>
+						<tr className="results-pagination-tr">
+							<td>
+								{paginate[0] > 0 ? (
+									<Button className="back-button" onClick={handlePaginateBack}>
+										⬅️
+									</Button>
+								) : null}
+							</td>
+							<td className="paginate-count">
+								Games {paginate[0] + 1} - {paginate[1] + 1} of {games.length}{" "}
+							</td>
+							<td>
+								{games.length > paginate[1] ? (
+									<Button
+										className="next-button"
+										onClick={handlePaginateForward}
+									>
+										➡️
+									</Button>
+								) : null}
+							</td>
+							<td className="results-per-page">
+								{" "}
+								Show {resultsPerPage} games per page.{" "}
+							</td>
+							<td className="pagination-filter-dropdown-wrapper">
+								<ResultsPerPageDropdown />
+							</td>
+						</tr>
+					</table>
+				</div>
+	)
 
 	return (
 		<>
@@ -59,6 +155,9 @@ export default function GameListRender({
 					/>
 				</div>
 			</div>
+			{games.length > 24 && (
+				<PaginateControls />
+			)}
 			<table className="gamelist-table">
 				<tr className="gl-header">
 					<th>Delete</th>
@@ -67,9 +166,14 @@ export default function GameListRender({
 					<th>Manufacturer</th>
 				</tr>
 
-				{map(games, (e) => {
+				{map(games, (e, index) => {
 					const rom = e.rom;
 					if (!e.title) {
+						return;
+					}
+					if (index > paginate[1]) {
+						return false;
+					} else if (index < paginate[0]) {
 						return;
 					}
 					return (
@@ -100,6 +204,9 @@ export default function GameListRender({
 					);
 				})}
 			</table>
+			{games.length > 24 && (
+				<PaginateControls />
+			)}
 		</>
 	);
 }

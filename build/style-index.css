@@ -190,4 +190,8 @@ body > div.components-modal__screen-overlay > div .game-card-description-text {
   text-align: center;
 }
 
+.results-pagination-div .results-per-page {
+  padding-left: 4rem;
+}
+
 /*# sourceMappingURL=style-index.css.map*/

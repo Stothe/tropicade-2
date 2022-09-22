@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "tropicade/tropicade2",
-	"version": "0.0.5",
+	"version": "0.0.10",
 	"title": "Tropicade 2",
 	"category": "common",
 	"icon": "palmtree",
