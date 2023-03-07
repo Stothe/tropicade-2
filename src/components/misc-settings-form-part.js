@@ -22,13 +22,13 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Horizontal"}
 							value={"0"}
-							onChange={() => boxesDispatch({ type: "screenOrientation" }, event)}
+							onChange={(e) => boxesDispatch({ type: "screenOrientation", value: e.target.value, checked: e.target.checked })}
 							defaultChecked
 						/>
 						<CheckboxControl
 							label={"Vertical"}
 							value={"90"}
-							onChange={() => boxesDispatch({ type: "screenOrientation" }, event)}
+							onChange={(e) => boxesDispatch({ type: "screenOrientation", value: e.target.value, checked: e.target.checked })}
 							defaultChecked
 						/>
 					</fieldset>
@@ -53,7 +53,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide Clones"}
 							value={"clones"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>
@@ -61,7 +61,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide Casino Games"}
 							value={"casino"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>
@@ -69,7 +69,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide Mahjong"}
 							value={"mahjong"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>
@@ -77,7 +77,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide Mature"}
 							value={"mature"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>
@@ -85,7 +85,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide PlayChoice10"}
 							value={"pc10"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>
@@ -93,7 +93,7 @@ export default function MiscSettingsFormPart({
 						<CheckboxControl
 							label={"Hide Nintendo Vs"}
 							value={"vs"}
-							onChange={() => boxesDispatch({ type: "filters" }, event)}
+							onChange={(e) => boxesDispatch({ type: "filters", value: e.target.value, checked: e.target.checked})}
 							defaultChecked
 						/>
 					</div>

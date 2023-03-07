@@ -20,9 +20,17 @@
 	"devDependencies": {
 		"@wordpress/eslint-plugin": "^9.0.6",
 		"@wordpress/scripts": "^23.6.0",
+		"eslint-config-google": "^0.14.0",
+		"eslint-config-standard": "^17.0.0",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-n": "^15.0.0",
+		"eslint-plugin-promise": "^6.0.0",
+		"eslint-plugin-react": "^7.32.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-wpcalypso": "^7.0.0",
 		"file-loader": "^6.2.0"
 	},
 	"dependencies": {
-		
+		"eslint": "^8.0.1"
 	}
 }

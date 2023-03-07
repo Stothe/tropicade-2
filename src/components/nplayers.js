@@ -32,7 +32,7 @@ export default function NPlayersFormPart({ selectedValues, boxesDispatch, ...pro
                                 key={index}
                                 label={control.label}
                                 value={control.value}
-                                onChange={() => boxesDispatch({ type: "nPlayersClicked"}, event)}
+                                onChange={(e) => boxesDispatch({ type: "nPlayersClicked", value: e.target.value, checked: e.target.checked})}
                                 defaultChecked={control.default}
                                 />
                        )

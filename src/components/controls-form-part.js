@@ -10,7 +10,7 @@ import {map} from "lodash";
 import Controls from "../json/control-options.json";
 import CheckboxControl from "./checkbox-control.js";
 
-export default function  ControlsFormPart({ selectedValues, onChangeHandler, ...props}) {
+export default function  ControlsFormPart({ selectedValues, boxesDispatch, ...props}) {
 	
 	return (
 		<div>
@@ -23,7 +23,7 @@ export default function  ControlsFormPart({ selectedValues, onChangeHandler, ...
                                 key={index}
                                 label={e.label}
                                 value={e.value}
-                                onChange={onChangeHandler}
+                                onChange={(e) => boxesDispatch({ type: "controlsClicked", value: e.target.value, checked: e.target.checked})}
 								defaultChecked={e.default}
                             />
 						);
