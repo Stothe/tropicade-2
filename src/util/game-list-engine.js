@@ -8,6 +8,8 @@ import { useEffect, useState } from '@wordpress/elements'
  * Local dependencies
  */
 import { specialClones, Mature, Casino, Mahjong, NPlayers, supplementalList, Games } from '../json'
+import substitueTwoPlayerVersion from './four-to-two-player-conversion'
+import sanitizeControls from './controls'
 
 export default function gameListEngine (
   maxButtons,
@@ -16,37 +18,35 @@ export default function gameListEngine (
   searchTerm,
   jobType = 'list'
 ) {
-//   const foundCount = 0
-//   const nullCount = 0
   const gamesToAddArray = []
   const gamesTargets = Games.game
 
-  const sanitizeControls = (ctl) => {
-    try {
-      if (ctl.input.control._type) {
-        return ctl.input.control._type
-      } else {
-        return 'buttons only'
-      }
-    } catch {
-      // sometimes the data has a goofy value so we just assume buttons only
-      return 'buttons only'
-    }
-  }
+  //   const sanitizeControls = (ctl) => {
+  //     try {
+  //       if (ctl.input.control._type) {
+  //         return ctl.input.control._type
+  //       } else {
+  //         return 'buttons only'
+  //       }
+  //     } catch {
+  //       // sometimes the data has a goofy value so we just assume buttons only
+  //       return 'buttons only'
+  //     }
+  //   }
 
-  const handleTwoPlayer = (e) => {
-    if (
-      boxesState.nplayersClicked.indexOf('2P sim') >= 0 && boxesState.nplayersClicked.indexOf('4P sim') < 0
-    ) {
-      // push parent
-      const parentRom = find(gamesTargets, { _name: e._cloneof })
+  //   const handleTwoPlayer = (e) => {
+  //     if (
+  //       boxesState.nplayersClicked.indexOf('2P sim') >= 0 && boxesState.nplayersClicked.indexOf('4P sim') < 0
+  //     ) {
+  //       // push parent
+  //       const parentRom = find(gamesTargets, { _name: e._cloneof })
 
-      gamesToAddArray.push({
-        rom: parentRom._name,
-        gamelistIgonre: true
-      })
-    }
-  }
+  //       gamesToAddArray.push({
+  //         rom: parentRom._name,
+  //         gamelistIgonre: true
+  //       })
+  //     }
+  //   }
 
   map(gamesTargets, (e) => {
     try { // generic try/catch to prevent errors from crashing the app
@@ -96,15 +96,13 @@ export default function gameListEngine (
             rotate = '90'
           }
           if (boxesState.screenOrientation.indexOf(rotate) < 0) {
-            console.log('orientation')
             return
           }
         }
 
         // filter on controls and buttons
         if (
-          boxesState.controlsClicked.indexOf(controller) < 0 ||
-					maxButtons < buttons
+          boxesState.controlsClicked.indexOf(controller) < 0 || maxButtons < buttons
         ) {
           return
         }
@@ -112,61 +110,11 @@ export default function gameListEngine (
         const goodClone = find(specialClones, { rom: romName })
         if (goodClone) {
           if (goodClone.twoPlayer === true) {
-            handleTwoPlayer(e)
+            substitueTwoPlayerVersion(e)
           }
         } else if (boxesState.filters.indexOf('clones') > -1 && clone) {
           return
         }
-        // if enabled, check rom name against mature, casino, mahjong filters
-        //     if (
-        //       boxesState.filters.indexOf('mature') > -1 &&
-        // 				Mature.indexOf(romName) > -1
-        //     ) {
-        //       // mature
-        //       return
-        //     }
-
-        //     if (
-        //       boxesState.filters.indexOf('casino') > -1 &&
-        // 				Casino.indexOf(romName) > -1
-        //     ) {
-        //       // casino
-        //       return
-        //     }
-
-        //     if (
-        //       boxesState.filters.indexOf('mahjong') > -1 &&
-        // 				Mahjong.indexOf(romName) > -1
-        //     ) {
-        //       // mahjong
-        //       return
-        //     }
-
-        //     if (
-        //       boxesState.filters.indexOf('pc10') > -1 &&
-        // 				romName.startsWith('pc_')
-        //     ) {
-        //       // playchoice 10
-        //       return
-        //     }
-
-        //     if (
-        //       boxesState.filters.indexOf('vs') > -1 &&
-        // 				gameDesc.startsWith('Vs.')
-        //     ) {
-        //       // nintendo vs
-        //       return
-        //     }
-
-        //     if (includes(gameDesc, 'Cassette')) {
-        //       // Deco cassette and other crap
-        //       return
-        //     }
-
-        //     // genre filter
-        //     if (boxesState.category.indexOf(parentCat) >= 0) {
-        //       return
-        //     }
 
         // check against all filters
         const filterMap = {
@@ -181,7 +129,6 @@ export default function gameListEngine (
         for (const [filter, values] of Object.entries(filterMap)) {
           if (boxesState.filters.indexOf(filter) > -1) {
             if (values.some((value) => romName.includes(value))) {
-              console.log(filter)
               return
             }
           }
@@ -192,7 +139,6 @@ export default function gameListEngine (
       // get nplayer value for rom
       let players = NPlayers.find((p) => p.rom === romName)
       players = players.players
-      console.log(players, 'players')
       if (jobType !== 'list') {
         // we don't need to filter against anything
       } else {
